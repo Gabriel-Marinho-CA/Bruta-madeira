@@ -7,7 +7,7 @@
                   {% if slide.settings.image_slide != blank %}
                     <li class="slide w-full">
                       {% if slide.settings.link_banner != blank %}
-                        <a href="{{ slide.settings.link_banner }}">
+                        <a href="{{ slide.settings.link_banner }}" class="[&>img]:rounded-2xl">
                           {{ slide.settings.image_slide | image_url: width: 1360 | image_tag: loading: 'eager' }}
                         </a>
                       {% else %}
