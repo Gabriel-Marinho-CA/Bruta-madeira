@@ -1,0 +1,158 @@
+<style>
+  #main-minicart input::-webkit-outer-spin-button,
+  #main-minicart input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+</style>
+
+<div
+  class="fixed max-h-full top-0 z-[9999] right-0 w-full max-w-[566px] md:max-w-[414px] h-screen bg-white shadow-lg flex flex-col rounded-2xl sm:rounded-none translate-x-full [&.active]:translate-x-0 transition-all"
+  id="main-minicart"
+>
+  <div class="flex justify-between items-center mb-7 px-10 md:px-4 pt-6">
+    <h2 class="text-2xl">
+      Carrinho
+      <span class="bg-[#35735A] text-white rounded-full w-7 h-7 inline-flex items-center justify-center text-sm minicart-items-count">
+        {{- cart.item_count -}}
+      </span>
+    </h2>
+    <button aria-label="fechar minicart" class="text-2xl" id="close-minicart" onclick="closeMinicart()">&times;</button>
+  </div>
+
+  <div class="flex-1 overflow-y-auto overflow-x-hidden space-y-4 cart-items">
+    {% if cart.item_count == 0 %}
+      <p class="cart-drawer-empty h-full flex items-center justify-center font-bold text-base">
+        Seu carrinho está vazio =(
+      </p>
+    {% else %}
+
+      {% for item in cart.items %}
+        <div
+          class="flex items-start line-minicart-item !mt-7 px-10 md:px-4"
+          data-lineid="{{ item.key }}"
+          data-itemid="{{ item.id }}"
+          {% if item.properties == empty %}
+          {% else %}
+            {% for props in item.properties %}
+              data-{{ props }}="true"
+            {% endfor %}
+          {% endif %}
+        >
+          <img
+            src="{{ item.image | image_url }}"
+            alt="{{ item.title }}"
+            width="78"
+            height="78"
+            class="w-[78px] rounded object-contain"
+          >
+          <div class="ml-4 flex-1">
+            <h3 class="text-base text-custom-black font-black ">
+              <a href="{{ item.url }}" title="{{ item.product.title }}">
+                {{- item.product.title }}
+              </a>
+            </h3>
+
+            <div class="flex items-center gap-2 flex-wrap my-1.5">
+              {% if item.properties == empty %}
+                {% assign quantity = item.quantity %}
+                {% if item.variant.compare_at_price != blank %}
+                  {% if item.variant.compare_at_price > item.price %}
+                    {% assign listPrice = item.variant.compare_at_price %}
+                    {% capture listPriceUnit %}
+                           {{ listPrice | times: quantity }}
+                         {% endcapture %}
+                  {% endif %}
+                  <p class="line-through text-[#999999] text-base">{{ listPriceUnit | money }}</p>
+                {% endif %}
+                {% if item.original_price > item.price %}
+                  <p class="line-through font-black text-[#BA1A1A]">
+                    {{ item.original_price | times: quantity | money }}
+                  </p>
+                {% endif %}
+                <p class="font-black text-[#BA1A1A]">
+                  {{ item.price | times: quantity | money }}
+                </p>
+              {% else %}
+                <p class="line-through font-black text-gray-300">Grátis</p>
+              {% endif %}
+            </div>
+            <div class="flex items-center gap-12 md:gap-5">
+              {% if item.variant.title != "Default Title" %}
+               <p class="border border-[#EBEBEB] rounded py-[5px] px-3.5 h-10 w-full max-w-max flex items-center">
+                {{ item.variant.title }}
+              </p>
+            {% endif %}
+              <div class="flex justify-between items-start w-full">
+                {% if item.properties == empty %}
+                  <div class="border border-[#EBEBEB] h-10 flex items-center max-w-20 rounded py-[5px] px-3.5">
+                    <button onclick="stepDownInput(this, '{{ item.key }}', '{{ item.quantity }}')">-</button>
+                    <input
+                      onchange="updateMinicartInput(this, '{{ item.variant_id }}')"
+                      min="1"
+                      type="number"
+                      value="{% if item.quantity %}{{ item.quantity }}{% else %}1{% endif %}"
+                      max="{{ item.variant.inventory_quantity  }}"
+                      class="text-center w-full outline-none [appearance:textfield]"
+                    >
+                    <button onclick="stepUpInput(this, '{{ item.key }}', '{{ item.quantity }}' )">+</button>
+                  </div>
+                  <button
+                    aria-label="remover item"
+                    class="text-sm text-gray-500 hover:text-red-500 mt-2 underline"
+                    onclick="removeItemFromCart('{{ item.key }}')"
+                  >
+                    {% render 'ico-trash' %}
+                  </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <input class="hidden" type="text" name="properties[_giftPdpCode]">
+          <input class="hidden" type="text" name="properties[code]">
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="border-t bg-[#F2F2F2] py-5 px-10 md:px-4 xxl:max-h-80 xxl:overflow-scroll">
+    {% if cart.item_count != 0 %}
+      <div class="flex justify-between mb-4">
+        <span class="text-custom-black text-lg">subtotal</span>
+        <div id="cart-total-price" data-total-price="{{ cart.total_price  }}" class="flex items-end flex-col text-lg">
+          {% if cart.discount_applications.size > 0 %}
+            <span class="text-custom-black">
+              <s>{{- cart.original_total_price | money -}}</s></span
+            >
+
+            <span class="text-custom-black">
+              {{ cart.total_price | money }}
+            </span>
+          {% else %}
+            <span class="text-custom-black">{{- cart.total_price | money -}}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      {% form 'cart', cart %}
+        <button
+          aria-label="Ir para checkout"
+          type="submit"
+          name="checkout"
+          class="w-full bg-[#35735A] text-white p-4"
+        >
+          FECHAR PEDIDO
+        </button>
+      {% endform %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Minicart",
+  "settings": [
+  ],
+  "blocks": [
+  ]
+}
+{% endschema %}

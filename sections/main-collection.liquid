@@ -1,0 +1,264 @@
+<script src="{{ 'Search.js' | asset_url }}" defer></script>
+ 
+
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign pageUrl = contentForQuerystring
+  | split: '"pageurl":"'
+  | last
+  | split: '"'
+  | first
+  | split: '.myshopify.com'
+  | last
+  | replace: '\/', '/'
+  | replace: '%20', ' '
+  | replace: '\u0026', '&'
+-%}
+{% capture finalurl %}https://{{ pageUrl }}{% endcapture %}
+
+{% assign urlSearch = finalurl | split: '?' %}
+
+<style>
+  .filterActive {
+    position: fixed;
+    background-color: #fff;
+    inset: 0;
+    transition: all 0.3s ease;
+    min-width: 100%;
+    display: block;
+  }
+  .details-form:has([value="Oferta"]) {
+    display: none;
+  }
+</style>
+
+{% assign deskBanner = collection.metafields.custom.banner_desktop %}
+{% assign mobBanner = collection.metafields.custom.banner_mobile %}
+
+{% if deskBanner %}
+<div id="banner-collection" class="container">
+  <div class="banner shadow-banner relative">
+    {% render 'responsive-image', desktop: deskBanner, mobile: mobBanner, full: true %}
+    <div class="absolute inset-0 bg-[#CE4D35] mix-blend-hard-light pointer-events-none"></div>
+    <h1 class="absolute text-white top-1/2 left-1/2 z-[1] font-black text-[32px] lg:text-2xl transform translate-x-[-50%] translate-y-[-50%]">{{ collection.title }}</h1>
+  </div>
+</div>
+{% endif %}
+
+<div class="sm:hidden">
+    {% render 'breadcrumb', collection_name: collection.title %}
+</div>
+
+<div class="container mt-7" id="collection-page">
+  {% comment %} <div class="w-[calc(100%-250px-1.5rem)] flex justify-center ml-auto mb-6 lg:hidden pt-10">
+    <h1 class="text-[40px] leading-[1.1] font-normal">{{ collection.title }}</h1>
+  </div> {% endcomment %}
+  <div class="wrapper flex items-start gap-6 mb-16 md:flex-col">
+    <div class="min-w-[325px] sm:w-full">
+        <button onclick="activeFilter()" class="hidden sm:flex w-full py-2.5 px-5 bg-primary rounded-lg font-black text-white justify-center">Filtrar por</button>
+      <div id="filters-aside" class="sm:hidden overflow-scroll [&.filterActive]:z-40 [&.filterActive]:mt-0 px-px">
+        <div class="hidden sm:flex justify-between items-center px-6 py-4 bg-primary sticky top-0">
+          <p class="text-white font-black text-base">Filtrar por</p>
+          <button onclick="closeFilter()">{% render 'close-ico-filter' %}</button>
+        </div>
+          {% render 'sort-by', collection: collection %}
+          <div
+            id="discount-filter"
+            class="mt-4 shadow-banner bg-white flex items-center justify-between gap-2 py-4 px-2.5 sm:mx-4"
+          >
+            <h3 class="text-base font-black text-custom-black">Somente Ofertas</h3>
+
+            <label class="inline-flex items-center cursor-pointer">
+              <input type="checkbox" value="" class="sr-only peer">
+              <div
+                 onclick="handleOffer()"
+                class="relative w-8 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white  after:rounded-full after:h-3 after:w-3 after:transition-all  peer-checked:bg-[#35735A]"
+              ></div>
+            </label>
+          </div>
+      {% render 'filters-aside', collection_filters: collection.filters %}
+      
+      <div class="p-4 shadow-[0_0_2px_0_#56697373] hidden sm:block sticky bottom-0 bg-white">
+        <p class="w-full text-center text-[11px] font-[325] mb-2.5">{{collection.products_count}} Produtos</p>
+        <div class="flex items-center justify-between gap-4">
+          <a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="text-center w-full border border-[#35735A] font-black text-sm rounded-lg text-[#35735A] py-[7px]">Limpar</a>
+          <button onclick="submitForm()" class="w-full bg-[#35735A] rounded-lg font-black text-white text-sm py-[7px]">Aplicar</button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="search-result {% if collection.products_count == 0 %}flex-1{% endif %}">
+
+      {% if collection.products_count == 0 %}
+        <div class="empty-title pt-4">
+          <h1 class="text-2xl font-bold">Produtos não encontrados</h1>
+          <p>Modifique os filtros para visualizar produtos.</p>
+        </div>
+      {% else %}
+        <div class="search-items">
+          {% assign numberItemsPerPage = 12 %}
+
+          {% if urlSearch[1] contains 'view=9' %}
+            {% assign numberItemsPerPage = 9 %}
+          {% endif %}
+          {% if urlSearch[1] contains 'view=12' %}
+            {% assign numberItemsPerPage = 12 %}
+          {% endif %}
+          {% if urlSearch[1] contains 'view=18' %}
+            {% assign numberItemsPerPage = 18 %}
+          {% endif %}
+          {% if urlSearch[1] contains 'view=24' %}
+            {% assign numberItemsPerPage = 24 %}
+          {% endif %}
+
+          {% paginate collection.products by numberItemsPerPage %}
+            {% comment %} {% render 'user-actions-search-page', collection: collection, urlSearch: urlSearch, paginate: paginate %} {% endcomment %}
+
+            {% comment %} <div class="min_lg:hidden my-4 text-center">
+              <h2 class="text-2xl font-normal">{{ collection.title }}</h2>
+            </div> {% endcomment %}
+            <ul
+              data-next-url="{{ paginate.next.url }}"
+              class="search-result-items main-r-items grid grid-cols-3 gap-4 lg:grid-cols-2 sm:grid-cols-1"
+            >
+              {% assign availableProducts = collection.products | where: 'available' %}
+              {% assign outOfStockProducts = collection.products | where: 'available', false %}
+              {% assign products = availableProducts | concat: outOfStockProducts %}
+
+              <style>
+                .wrapper-pdp:not(:has(a)) {
+                  display: none;
+                }
+              </style>
+              {% for product in products %}
+                <li class="rounded border border-white bg-white relative transition-shadow hover:shadow-[0_6px_20px_0px_#0000000F]">
+                    {% render 'shelf-pdp', product: product %}
+                </li>
+              {% endfor %}
+            </ul>
+
+            <div 
+              class="
+                paginate flex items-center justify-center gap-3 text-center mt-6 [&>span]:w-10 [&>span]:h-10 [&>span]:text-custom-black [&>span]:rounded [&>span]:flex [&>span]:items-center [&>span]:justify-center [&>span]:text-sm [&>span]:border [&>span]:border-[#303030] [&>span]:bg-white [&>span.current]:bg-[#303030] [&>span.current]:text-white [&>span]:cursor-pointer [&>span>a]:w-full [&>span>a]:h-full [&>span>a]:flex [&>span>a]:justify-center [&>span>a]:items-center
+                [&>span.next>a]:text-[0px] [&>span.next>a]:bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxMCAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuNjY2OTkgMTQuNjY2Nkw4LjMzMzY2IDcuOTk5OTJMMS42NjY5OSAxLjMzMzI1IiBzdHJva2U9IiMxQjFCMUIiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg==')] [&>span>a]:bg-no-repeat [&>span>a]:bg-center
+
+                 [&>span.prev>a]:text-[0px] [&>span.prev>a]:bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNi4wIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjQgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTkuNCAyMzMuNGMtMTIuNSAxMi41LTEyLjUgMzIuOCAwIDQ1LjNsMTkyIDE5MmMxMi41IDEyLjUgMzIuOCAxMi41IDQ1LjMgMHMxMi41LTMyLjggMC00NS4zTDc3LjMgMjU2IDI0Ni42IDg2LjZjMTIuNS0xMi41IDEyLjUtMzIuOCAwLTQ1LjNzLTMyLjgtMTIuNS00NS4zIDBsLTE5MiAxOTJ6Ii8+PC9zdmc+')] [&>span.prev>a]:bg-[length:11px]
+              "
+            >
+              {{- paginate | default_pagination -}}
+            </div>
+            <div class="load_more">
+              <button class="show_more_btn"></button>
+              <div class="load-more__spiner"></div>
+            </div>
+          {% endpaginate %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .class-wrapper-inputs {
+    position: relative;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
+
+  .wrapper-input-bar {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+  }
+  .class-wrapper-inputs input[type='range'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    outline: none;
+    position: absolute;
+    margin: auto;
+    top: 5px;
+    bottom: 0;
+    background-color: transparent;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @-moz-document url-prefix() {
+    .class-wrapper-inputs input[type='range'] {
+      top: 0;
+    }
+  }
+
+  .slider-track {
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+    background-color: #CE4D35;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    height: 5px;
+  }
+  input[type='range']::-moz-range-track {
+    -moz-appearance: none;
+    height: 5px;
+  }
+  input[type='range']::-ms-track {
+    appearance: none;
+    height: 5px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    background-color: #CE4D35;
+    border: unset;
+    cursor: pointer;
+    margin-top: -9px;
+    pointer-events: auto;
+    border-radius: 4px;
+  }
+  input[type='range']::-moz-range-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #CE4D35;
+    border: unset;
+    pointer-events: auto;
+  }
+
+  input[type='range']::-ms-thumb {
+    appearance: none;
+    height: 12px;
+    width: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #CE4D35;
+    border: unset;
+    pointer-events: auto;
+  }
+  input[type='range']:active::-webkit-slider-thumb {
+    background-color: #ffffff;
+    border: 3px solid #CE4D35
+  }
+  .values {
+    padding-top: 9px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .values .span {
+    color: #7d7577;
+    font-size: 12px;
+  }
+</style>

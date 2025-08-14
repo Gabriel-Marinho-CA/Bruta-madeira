@@ -1,0 +1,63 @@
+{% if section.blocks.size > 0 %}
+  <div id="deals" class="p-6 md:p-4 bg-primary">
+    <div class="swiper container">
+      <ul class="swiper-wrapper flex items-center justify-between">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'offer' %}
+              <li class="swiper-slide !flex items-center justify-center gap-2">
+                <img
+                  src="{{ block.settings.image_deals | image_url }}"
+                  alt="{{block.settings.image_deals.alt }}"
+                  width="{{  block.settings.image_deals.width }}"
+                  height="{{ block.settings.image_deals.height }}"
+                >
+                  <div class="flex items-start flex-col">
+                    <p class="font-extrabold text-white text-sm">{{ block.settings.title }}</p>
+                    <p class="text-xs text-white">{{ block.settings.subtitle }}</p>
+                  </div>
+              </li>
+            {% else %}
+  
+          {% endcase %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Seção Ofertas",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "offer",
+      "name": "offer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo oferta"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitulo oferta"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_deals",
+          "label": "Imagem Deals Home"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name":"Seção Ofertas"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,569 @@
+<script src="{{ "Header.js" |  asset_url }}"></script>
+
+{% assign main = section.settings %}
+
+{% if section.settings.top_bar_enable %}
+  {% render 'header-top-bar',
+    txt1: main.text_top_bar,
+    txt2: main.text_top_bar_2,
+    link1: main.link_bar,
+    link2: main.link_bar_2,
+    icone1: main.image_bar,
+    icone2: main.image_bar_2
+  %}
+{% endif %}
+
+<style>
+  #shopify-section-main-header {
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+  }
+  @media(max-width:768px) {
+    #shopify-section-main-header {
+      z-index: 11;
+    }
+  }
+</style>
+
+<header
+    class="main-header pt-5 md:pt-2.5 bg-[#F9F9F9]"
+>
+  <div class="container mb-5 md:mb-0">
+    <div class="wrapper flex justify-between items-center gap-4 sm:flex-wrap sm:gap-3 sm:max-w-[500px] sm:mx-auto">
+      <div class="toggle-mob min_lg:hidden bg-primary rounded p-2.5">
+        {% render 'menu-burguer-mob' %}
+      </div>
+      <div class="logo sm:[&>svg]:w-full max-w-[177px] md:mr-auto">
+        <a href="/" class="md:[&>svg]:max-w-[130px]">
+          {% render 'logo-bruta' %}
+        </a>
+      </div>
+      <div class="search-bar flex-1 relative max-w-[724px] sm:order-3 sm:basis-full">
+        <form action="{{ routes.search_url }}" class="relative">
+          <button type="submit" class="block absolute right-4 top-1/2 -translate-y-1/2">
+            <label for="search" class="cursor-pointer" aria-label="Pesquisar">
+              {% render 'search-ico' %}
+            </label>
+          </button>
+          <input
+            class="w-full border border-[#C6C6C6] focus:outline focus:outline-primary outline-1 rounded py-4 px-4 max-h-11 text-xs text-[#777777]"
+            type="text"
+            placeholder="{{ main.search_placeholder }}"
+            name="q"
+            autocomplete="off"
+            value="{{ search.terms | escape }}"
+            onkeyup="getSearchResultItems(this.value)"
+          >
+          <input
+            type="submit"
+            name="submit-search"
+            id="submit-search"
+            style="display:none"
+            value=""
+          >
+          <input
+            type="hidden"
+            name="type"
+            value="products"
+            style="display:none"
+          >
+        </form>
+        <div class="search-result absolute bg-white !z-[2] rounded-b-md shadow-sm hidden [&.active]:block w-full">
+          <button
+            class="px-4 close-search-result flex justify-end text-2xl text-red-600 font-medium cursor-pointer w-full"
+            onclick="closeSearchResult()"
+          >
+            &times;
+          </button>
+          <ul class="wrapper-search-result flex flex-col gap-3 p-4 overflow-y-auto max-h-[50dvh]"></ul>
+        </div>
+      </div>
+      <div class="user-actions flex justify-center items-center gap-6 sm:gap-1">
+        <div class="login-area">
+          {% if customer %}
+            <a href="/account/" aria-label="Ir para minha conta" class="text-xs font-bold text-custom-black flex items-center">
+              {% render 'user-ico' %}
+              {{ customer.first_name -}}
+            </a>
+          {% else %}
+            <a href="/account/login" aria-label="Ir para o login" class="flex items-center gap-0.5 md:[&>svg]:max-w-6">
+              {% render 'user-ico' %}
+              <div class="flex flex-col sm:hidden text-xs text-custom-black">
+                <span class="leading-4"><span class="font-bold">Entre </span>ou</span>
+                <span class="leading-4"><span class="font-bold">Cadastre-se</span></span>
+              </div>
+            </a>
+          {% endif %}
+        </div>
+        <div class="md:hidden">
+          <a href="/pages/wishlist" class="flex items-center gap-0.5 text-xs font-bold text-custom-black">
+            {% render 'wish-ico' %}
+            Lista de <br> Favoritos
+          </a>
+        </div>
+        <div class="minicart">
+          <button aria-label="abrir minicart" id="toggle-minicart" onclick="openMinicart()" class="open-minicart flex items-center gap-2.5 cursor-pointer">
+            <div class="relative md:[&>svg]:max-w-6 text-start">
+              {% render 'cart-ico' %}
+              <span class="minicart-count-items bg-[#35735A] text-xs text-white font-bold w-[22px] h-[22px] rounded-full flex items-center justify-center absolute -right-2 -top-2">
+                {{- cart.item_count -}}
+              </span>
+            </div>
+            <span class="md:hidden text-xs font-bold text-custom-black">Meu <br> Carrinho</span>
+          </button>
+        </div>
+      </div>
+      {% comment %} <div class="wrapper-all-result">
+        <div class="search-result">
+          <ul class="wrapper-search-result"></ul>
+        </div>
+      </div> {% endcomment %}
+    </div>
+  </div>
+  {% comment %} {% assign itensMenu = 'moveis,estofados,eletro,colchoes,telefonia,eletronicos,portateis,esporte-e-lazer,beleza,ar-e-ventilacao'
+    | split: ','
+  %} {% endcomment %}
+  <div class="shadow-[0px_3px_4px_0px_#0000001F] sm:pt-4">
+    <nav class="container departments flex justify-between items-center lg:hidden">
+      <div class="w-full ">
+        <ul class="flex text-lg leading-4 justify-between gap-4">
+          <li class=" pb-1.5 has-[>ul] relative group flex items-center gap-1 group menu--item" data-bind-menu="all-categ">
+            <span
+              {% comment %} href="/collections/all" {% endcomment %}
+              class="
+              cursor-pointer
+              text-center
+                text-custom-black font-bold
+                flex  justify-center h-full  group-[.active]:border-b
+                border-primary
+                flex-col
+                gap-1
+                group-[.active]:text-primary uppercase text-[11px] items-center
+                         [&_svg]:min-w-[24px]
+                    [&_svg]:min-h-[24px]
+              "
+            >
+              {% render 'menu-burguer-header' %}
+              Todas as
+              Categorias
+            </span>
+          </li>
+          {% for link in main.department_menu.links limit: 7 %}
+            {% assign linkTitleHandle = link.title | handleize %}
+            {% comment %} {% if itensMenu contains linkTitleHandle %} {% endcomment %}
+              <li class="pb-1.5 has-[>ul] relative group menu--item" data-bind-menu="{{ linkTitleHandle }}">
+                <span
+                  class="
+                  cursor-pointer
+                    group-[.active]:border-b
+                    group-[.active]:text-primary
+                    gap-1
+                    text-custom-black
+                    text-[11px]
+                    font-bold
+                    flex items-center justify-center h-full  uppercase flex-col
+                    border-primary
+                    text-center
+                    [&_svg]:min-w-[24px]
+                    [&_svg]:min-h-[25px]
+                  "
+                  title="{{ link.title }}"
+                >
+                  {% capture iconContries %}icon-{{ linkTitleHandle }}{% endcapture %}
+                  {% include iconContries %}
+                  <div class="flex items-center justify-between gap-1">
+                    {{ link.title -}}
+                    {% comment %} {% render 'arrow-down-b' %} {% endcomment %}
+                  </div>
+                </span>
+              </li>
+            {% comment %} {% endif %} {% endcomment %}
+          {% endfor %}
+
+          <a href="/" class="max-w-40 h-[42px] flex items-center justify-center bg-primary w-full border border-primary rounded-lg py-3.5 px-5 text-center text-white font-black text-xs  hover:bg-white hover:text-primary transition duration-200 ease-out">
+            OFERTAS
+          </a>
+
+        </ul>
+
+ <div
+  data-bind-menu="all-categ"
+  class="all-categories bg-white absolute z-10 w-full hidden [&.active]:block menu-wrapper left-0"
+>
+  <div class="container flex min-h-[50vh] max-h-[50vh] py-8 gap-8">
+    <ul id="menu-parents" class="w-3/12 flex flex-col gap-1 border-r border-gray-200 overflow-y-auto">
+      {% for link in main.department_menu.links %}
+        {% assign handle = link.title | handleize %}
+
+        <li
+          id="parent-{{ handle }}"
+          class="menu-parent group
+            cursor-pointer hover:bg-gray-100"
+          data-handle="{{ handle }}"
+          onmouseover="showChildren('{{ handle }}')"
+        >
+
+          <a
+            class="
+              px-2 py-2
+              group-[.active]:text-primary
+              group-[.active]:bg-gray-100
+              w-full flex items-center justify-between
+              text-custom-black
+              text-xs
+              font-bold
+            "
+            href="{{ link.url }}"
+            title="{{ link.title }}"
+          >
+
+            <span class="flex items-center gap-1">
+              {% capture iconCountries %}icon-{{ handle }}{% endcapture %}
+              {% include iconCountries %}
+              {{ link.title }}
+            </span>
+            <span class="-rotate-90">
+              {% render 'arrow-down-b' %}
+            </span>
+          </a>
+
+        </li>
+      {% endfor %}
+    </ul>
+    
+    <div id="menu-children" class="flex-1 overflow-y-auto">
+      {% for link in main.department_menu.links %}
+        {% assign handle = link.title | handleize %}
+        {% if link.links.size > 0 %}
+          <ul
+            id="children-{{ handle }}"
+            class="hidden container py-8 flex flex-col gap-2.5  min-h-[50vh] max-h-[50vh] flex-wrap w-full overflow-y-auto"
+          >
+            {% for sublink in link.links %}
+              <li class="group">
+                <a
+                  href="{{ sublink.url }}"
+                  title="{{ sublink.title }}"
+                  class="text-custom-black font-black text-xs flex items-center gap-1"
+                >
+                  {{- sublink.title -}}
+                </a>
+                {% if sublink.links.size > 0 %}
+                  <ul class="!flex flex-col">
+                    {% for subSublink in sublink.links %}
+                      {%- assign subSublinkHandle = subSublink.title | handleize | append: '-extra' -%}
+                      <li>
+                        {%- assign hasExtraLinks = false -%}
+                        {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                          {%- assign hasExtraLinks = true -%}
+                        {%- endif -%}
+                        
+                        <a
+                          href="{{ subSublink.url }}"
+                          title="{{ subSublink.title }}"
+                          class="text-custom-black text-xs {% if hasExtraLinks %}font-bold{% endif %}"
+                        >
+                          {{- subSublink.title -}}
+                        </a>
+                        {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                          <ul class="pl-2 text-custom-black !flex text-xs mt-2 flex flex-col gap-2">
+                            {% for extraLink in linklists[subSublinkHandle].links %}
+                              <li>
+                                <a href="{{ extraLink.url }}" title="{{ extraLink.title }}">
+                                  {{- extraLink.title -}}
+                                </a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+        {% for link in main.department_menu.links limit: 7 %}
+          {% assign linkTitleHandle = link.title | handleize %}
+          {% comment %} {% if itensMenu contains linkTitleHandle %} {% endcomment %}
+            {% if link.links.size > 0 %}
+              <div
+                data-bind-menu="{{ linkTitleHandle }}"
+                class="absolute w-full bg-white z-10 hidden [&.active]:flex justify-between menu-wrapper left-0"
+              >
+                {% comment %} <ul class="container py-8 flex gap-12  min-h-[50vh] max-h-[50vh] flex-wrap w-full overflow-y-auto"> {% endcomment %}
+                  <ul class="container py-8 flex flex-col gap-2.5  min-h-[50vh] max-h-[50vh] flex-wrap w-full overflow-y-auto">
+                {% for sublink in link.links %}
+                    <li class="group">
+                      <a
+                        href="{{ sublink.url }}"
+                        title="{{ sublink.title }}"
+                        class="text-custom-black font-black text-xs flex items-center gap-1"
+                      >
+                        {{- sublink.title -}}
+                        {% comment %} {% if sublink.links.size > 0 %}
+                          <span class="w-3 h-3 [&>svg]:max-w-3">
+                          {% render 'arrow-down-b' %}
+                          </span>
+                        {% endif %} {% endcomment %}
+                      </a>
+                      {% if sublink.links.size > 0 %}
+                        <ul class="flex flex-col">
+                          {% for subSublink in sublink.links %}
+                            {%- assign subSublinkHandle = subSublink.title | handleize | append: '-extra' -%}
+                            <li>
+                            {%- assign hasExtraLinks = false -%}
+                            {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                              {%- assign hasExtraLinks = true -%}
+                            {%- endif -%}
+                            
+                            <a
+                              href="{{ subSublink.url }}"
+                              title="{{ subSublink.title }}"
+                              class="text-custom-black text-xs {% if hasExtraLinks %}font-bold{% endif %}"
+                            >
+                              {{- subSublink.title -}}
+                            </a>
+                                                        
+                              {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                                <ul class="pl-2 text-custom-black  text-xs mt-2 flex flex-col gap-2">
+                                  {% for extraLink in linklists[subSublinkHandle].links %}
+                                    <li>
+                                      <a href="{{ extraLink.url }}" title="{{ extraLink.title }}">
+                                        {{- extraLink.title -}}
+                                      </a>
+                                    </li>
+                                  {% endfor %}
+                                </ul>
+                              {%- endif -%}
+
+
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+          {% comment %} {% endif %} {% endcomment %}
+        {% endfor %}
+      </div>
+    </nav>
+  </div>
+
+</header>
+
+
+{% comment %} {% render 'menu-mobile-header', departments_menu: main.department_menu.links %} {% endcomment %}
+
+<div
+  class="menu-mobile fixed w-[90%] max-w-[90vw] shadow-[0px_3px_6px_#cecece] -translate-x-[150%] transition-all z-[5] inset-0 bg-white flex flex-col [&.active]:translate-x-0"
+  id="menu-mobile"
+>
+<header class="pb-4">
+    <div class="close-menu-mob flex items-center h-[45px] border-b py-3 border-[#ECE0DB] [&>svg]:ml-4" id="close-menu-mobile">
+      {% render 'close-menu-ico' %}
+    </div>
+
+    <div class="flex items-center gap-4 px-4 py-4 pb-7">
+      {% render 'user-ico-menu' %}
+      <div class="">
+        {% if customer %}
+          <p class="text-[#777777] text-sm">{{ customer.first_name -}}</p>
+        {% else %}
+          <h3 class="text-custom-black text-lg font-black leading-5">entre ou cadastre-se</h3>
+          <p class="text-[#777777] text-sm">seus pedidos, favoritos, conta...</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="px-4 flex items-center justify-center gap-4">
+      {% if customer %}
+        <a
+          class="flex-1 flex items-center justify-center h-[39px] text-white text-base font-black border rounded-lg bg-primary border-primary"
+          href="/account/#profile"
+        >
+          Minha conta
+        </a>
+      {% else %}
+        <a
+          class="flex-1 flex items-center justify-center h-[39px] text-white text-base font-black border rounded-lg bg-primary border-primary"
+          href="/account/login"
+          >Entrar</a
+        >
+          <a
+            class="flex-1 flex items-center justify-center h-[39px] font-black text-base text-primary border rounded-lg border-primary"
+            href="/account/register"
+            >Criar Conta</a
+          >
+      {% endif %}
+    </div>
+  </header>
+
+  <ul class="departments overflow-y-auto p-4">
+    {% for link in main.department_menu.links limit: 20 %}
+     {% assign link_title_handle = link.title | handleize %}
+
+     <li class="has-[>ul] relative group py-4">
+       <div class="flex items-center justify-between gap-1">
+         <a
+           class="
+             text-custom-black font-bold
+             h-full text-xs uppercase
+             flex items-center justify-between gap-1
+             group-[.active]:text-primary
+           "
+           href="{{ link.url }}"
+           title="{{ link.title }}"
+         >
+             {% capture icon_countries %}icon-{{ link_title_handle }}{% endcapture %}
+             {% include icon_countries %}
+             {{ link.title -}}
+         </a>
+         <span class="toggle-menu [&>svg]:-rotate-90 transition-all group-[.active]:[&>svg]:rotate-0" data-toggle-menu="{{ link_title_handle }}">
+           {% render 'arrow-down-b' %}
+         </span>
+       </div>
+       {% if link.links.size > 0 %}
+             <div
+               data-bind-menu="{{ link_title_handle }}"
+               class=" w-full bg-white justify-between menu-wrapper hidden group-[.active]:flex mt-2"
+             >
+               <ul class="flex flex-col gap-2 w-full">
+                {% for sublink in link.links %}
+                  <li class="group">
+                    <a
+                      href="{{ sublink.url }}"
+                      title="{{ sublink.title }}"
+                      class="text-custom-black font-black text-xs flex items-center gap-1"
+                    >
+                      {{- sublink.title -}}
+                    </a>
+                    {% if sublink.links.size > 0 %}
+                      <ul class="flex flex-col">
+                        {% for subSublink in sublink.links %}
+                          {%- assign subSublinkHandle = subSublink.title | handleize | append: '-extra' -%}
+                          <li>
+                          {%- assign hasExtraLinks = false -%}
+                          {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                            {%- assign hasExtraLinks = true -%}
+                          {%- endif -%}
+                          
+                          <a
+                            href="{{ subSublink.url }}"
+                            title="{{ subSublink.title }}"
+                            class="pl-2 text-custom-black text-xs {% if hasExtraLinks %}font-bold{% endif %}"
+                          >
+                            {{- subSublink.title -}}
+                          </a>
+                          
+                          
+                            {% comment %} {%- assign subSublinkHandle = subSublink.title | handleize | append: '-extra' -%} {% endcomment %}
+                            {%- if linklists[subSublinkHandle] and linklists[subSublinkHandle].links.size > 0 -%}
+                              <ul class="pl-4 text-custom-black  text-xs mt-2 flex flex-col gap-2">
+                                {% for extraLink in linklists[subSublinkHandle].links %}
+                                  <li>
+                                    <a href="{{ extraLink.url }}" title="{{ extraLink.title }}">
+                                      {{- extraLink.title -}}
+                                    </a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            {%- endif -%}
+
+
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+               </ul>
+             </div>
+           {% endif %}
+     </li>
+   {% endfor %}
+ </ul>
+
+
+  <div class="extra-dpt pt-2">
+    <a class="h-12 flex items-center bg-primary p-4 pl-6 text-white font-black text-xs leading-4" href="/collections/ofertas">OFERTAS</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Active top bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_bar_enable",
+      "label": "Barra topo | ON/OFF",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "text_top_bar",
+      "label": "Barra topo | Texto 1",
+      "default": "<p>Nossas Lojas</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_top_bar_2",
+      "label": "Barra topo | Texto 2",
+      "default": "<p>Compre pelo Whatsapp</p>"
+    },
+    {
+      "type": "url",
+      "id": "link_bar",
+      "label": "Barra topo | Link 1"
+    },
+    {
+      "type": "url",
+      "id": "link_bar_2",
+      "label": "Barra topo | Link 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bar",
+      "label": "Barra topo imagem | Icone 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bar_2",
+      "label": "Barra topo imagem | Icone 2"
+    },
+    {
+      "type": "header",
+      "content": "Barra de pesquisa"
+    },
+    {
+      "type": "text",
+      "default": "O que você procura?",
+      "id": "search_placeholder",
+      "label": "Barra de Pesquisa | placeholder"
+    },
+    {
+      "type": "header",
+      "content": "Menu Departamentos"
+    },
+    {
+      "type": "link_list",
+      "id": "department_menu",
+      "label": "Menu | Links Departamentos"
+    },
+  ]
+}
+{% endschema %}

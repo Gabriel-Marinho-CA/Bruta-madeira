@@ -1,0 +1,108 @@
+{% assign blocks = section.blocks %}
+{% assign collectionId = section.settings.title | strip_html | handleize %}
+
+{% if blocks.size > 0 %}
+  <div class="relative" id="{{ collectionId  }}">
+    {% if section.settings.title != blank %}
+      <div
+        class="text-center text-custom-black font-black text-[22px] mb-10 md:mb-8 md:text-lg uppercase"
+      >
+        {{ section.settings.title }}
+      </div>
+    {% endif %}
+    <div class="relative mx-auto max-w-[1460px]">
+      <div class="container">
+        <div class="swiper">
+          <ul class="swiper-wrapper">
+            {% for block in blocks %}
+              {%- assign collection = collections[block.settings.collection] -%}
+              {% for product in collection.products %}
+                <li class="swiper-slide rounded-lg border border-white bg-white transition-shadow hover:shadow-[0_6px_20px_0px_#0000000F]">
+                  {% render 'shelf-pdp',
+                    product: product,
+                  %}
+                </li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="select-none swiper-button-prev-custom md:hidden z-[9] absolute top-1/2 -translate-y-1/2 after:hidden flex items-center justify-center">
+        <div class=" flex items-center justify-start md:justify-center">
+          {% render 'btn-left-banner' %}
+        </div>
+      </div>
+      <div class="select-none swiper-button-next-custom z-[9] after:hidden flex cursor-pointer absolute top-1/2 -translate-y-1/2 right-0 md:hidden">
+        <div class=" flex items-center justify-end md:justify-center">
+          {% render 'btn-right-banner' %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    createCollectionSwiper('{{ collectionId }}');
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Lista de Coleção",
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Titulo | Texto",
+      "default": "<h2>titulo<strong> COLEÇÃO</strong></h2>"
+    },
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "label": "Collection",
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "label": "product",
+          "id": "product",
+          "type": "product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lista de Coleção",
+      "blocks": [
+        {
+          "type": "collection"
+        }
+      ]
+    },
+    {
+      "name": "Produtos Manual",
+      "blocks": [
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

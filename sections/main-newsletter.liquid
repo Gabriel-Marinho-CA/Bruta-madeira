@@ -1,0 +1,104 @@
+<div class="bg-primary mt-6 p-3" id="newsletter">
+    <div class="container flex justify-between gap-5 sm:gap-4 items-center lg:flex-col">
+      <div class="flex items-center lg:w-full">
+        <div class="image-wrapper relative">
+          {% if section.settings.image %}
+            <div class="image lg:[&>img]:max-w-[113px] sm:[&>img]:max-w-[64px]">
+              
+              {% render 'responsive-image', desktop: section.settings.image, mobile: section.settings.image_mob, full: true %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="text-white">
+          <h3 class="font-black text-[22px] sm:text-lg">{{ section.settings.newsletter_title }}</h3>
+          <p class="subtitle-newsletter text-sm sm:text-xs">{{ section.settings.sub_title }}</p>
+        </div> 
+      </div>
+  
+      <div class="flex flex-col gap-2 flex-1">
+        {% form 'customer' %}
+          <div class="flex gap-2 sm:gap-4 h-[50px] lg:h-full lg:flex-col">
+            {{ form.errors | default_errors }}
+            {% if form.posted_successfully? %}
+              <p class="success-message">Dados enviados com sucesso !</p>
+            {% else %}
+              <input
+                class="border text-xs text-[#ACABAA] border-[#E8E1DC] rounded-[4px] py-1 px-4 flex-1 lg:py-[13px]"
+                type="text"
+                name="contact[name]"
+                id="Name"
+                value="{% if customer.name != blank %}{{ customer.name }}{% endif %}"
+                placeholder="Nome"
+              >
+              <input
+                class="border text-xs border-[#E8E1DC] text-[#ACABAA] rounded-[4px] py-1 px-4 flex-1 lg:py-[13px]"
+                type="email"
+                name="contact[email]"
+                id="Email"
+                value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+                placeholder="E-mail"
+                autocorrect="off"
+                autocapitalize="off"
+              >
+                <div class="hidden sm:block consent text-white text-[10px] font-bold">
+                  {{ section.settings.consent_newsletter }}
+                </div>
+              <button
+                class="rounded-lg border border-white text-white text-base font-black py-3 px-6 transition"
+                type="submit"
+                name="commit"
+                id="Subscribe"
+              >
+                Cadastrar
+              </button>
+            {% endif %}
+          </div>
+        {% endform %}
+        <div class="sm:hidden consent text-white text-[10px] font-bold">
+          {{ section.settings.consent_newsletter }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {% schema %}
+  {
+    "name": "Newsletter",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Imagem newsletter"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mob",
+        "label": "Imagem newsletter Mobile"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Title",
+        "default": "Se conecte com a gente!"
+      },
+      {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub title",
+        "default": "Cadastre-se e receba as melhores ofertas:"
+      },
+      {
+        "type": "richtext",
+        "id": "consent_newsletter",
+        "label": "Consent message",
+        "default": "<p>Ao se cadastrar você concorda em receber e-mails promocionais e novidades. Saiba mais na nossa <a href='#' target='_blank'>Politica de Privacidade</a></p>"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Newsletter",
+        "category": "Promotional"
+      }
+    ]
+  }
+  {% endschema %}

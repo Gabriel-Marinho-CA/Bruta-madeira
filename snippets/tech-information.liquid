@@ -1,0 +1,266 @@
+{% assign main = product.metafields%}
+
+
+{% capture techContent %}
+  {% if main.custom.caracteristicas_produto != blank %}
+    <li class="max-w-[646px]">
+      <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+        <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Produto</p>
+        <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_produto.value }}</p>
+      </div>
+    </li>
+  {% endif %}
+  {% if main.custom.custom.caracteristicas_uso_indicado != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Uso Indicado</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_uso_indicado.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+  {% if main.custom.caracteristicas_tipo != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Tipo</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_tipo.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_marca != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Marca</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_marca.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_modelo != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Modelo</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_modelo.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_material_trabalhado != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Material a ser Trabalhado</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_material_trabalhado.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_intensidade_de_uso != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Intensidade de Uso</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_intensidade_de_uso.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_alimentacao != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Alimentação</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_alimentacao.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_tensao_eletrica != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Tensão Elétrica</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_tensao_eletrica.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_potencia != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Potência</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_potencia.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_ferramenta_intercambiavel != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Ferramenta Intercambiável</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_ferramenta_intercambiavel.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_tipo_do_motor != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Tipo do Motor</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_tipo_do_motor.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_controle_de_velocidade != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Possui Controle de Velocidade</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_controle_de_velocidade.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_velocidade != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Velocidade</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_velocidade.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_golpes_por_minuto != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Golpes por Minuto</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_golpes_por_minuto.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_comprimento_do_golpe != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Comprimento do Golpe</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_comprimento_do_golpe.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_capacidade_de_corte_em_madeira != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Capacidade de Corte em Madeira</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_capacidade_de_corte_em_madeira.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_capacidade_de_corte_em_tubos != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Capacidade de Corte em Tubos</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_capacidade_de_corte_em_tubos.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_peso_do_produto != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Peso do Produto</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_peso_do_produto.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_produto_acompanha_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Produto Acompanha Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_produto_acompanha_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_tipo_de_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Tipo de Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_tipo_de_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_altura_da_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Altura da Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_altura_da_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_largura_da_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Largura da Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_largura_da_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_profundidade_da_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Profundidade da Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_profundidade_da_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_peso_do_produto_na_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Peso do Produto na Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_peso_do_produto_na_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_conteudo_da_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Conteúdo da Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_conteudo_da_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_dimensao_da_embalagem != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Dimensão da Embalagem</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_dimensao_da_embalagem.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_acompanha_maleta != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Acompanha Maleta</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_acompanha_maleta.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_garantia_do_fabricante != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Garantia do Fabricante</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_garantia_do_fabricante.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_observacoes_garantia_fabricante != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Observações sobre a Garantia do Fabricante</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_observacoes_garantia_fabricante.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+    {% if main.custom.caracteristicas_referencia_do_produto != blank %}
+      <li class="max-w-[646px]">
+        <div class="flex items-center justify-between gap-4 px-2.5 py-3">
+          <p class="text-custom-black font-black text-sm sm:text-xs w-6/12">Referência do Produto</p>
+          <p class="text-custom-black text-sm sm:text-xs w-6/12">{{ main.custom.caracteristicas_referencia_do_produto.value }}</p>
+        </div>
+      </li>
+    {% endif %}
+{% endcapture %}
+{% if techContent != blank %}
+  <section class="container bg-white px-6 py-10 mt-5 sm:px-4">
+    <div class="mb-6">
+        <p class="font-black text-[22px] text-custom-black">CARACTERÍSTICAS TÉCNICAS</p>
+    </div>
+    <div>
+      <ul class="ul-alternate columns-2 md:columns-1">
+        {{ techContent }}
+       
+      </ul>
+    </div>
+</section>
+{% endif %}

@@ -1,0 +1,180 @@
+{% assign productUrl = product.url %}
+{% assign productTitle = product.title %}
+{% assign bestPrice = product.price | times: 1.0 | divided_by: 100 %}
+{% assign bestPriceMoney = product.price | money | replace: 'R$', ' ' %}
+{% assign seals = product.metafields.custom.tags_prateleira.value %}
+
+{% if product.compare_at_price %}
+  {% assign listPrice = product.compare_at_price_min | times: 1.0 | divided_by: 100 %}
+
+  {% if listPrice > bestPrice %}
+    {% assign listPriceMoney = product.compare_at_price_min | money %}
+    {% capture discountTag %}
+        {{  bestPrice | times: 100 |  divided_by: listPrice  | minus: 100  | times: -1 | floor }}%
+      {% endcapture %}
+  {% endif %}
+{% endif %}
+ 
+{% if product.metafields.custom.data_oferta %}
+<div
+  class="animate-countdown countdown-timer min-h-[26px] bg-black p-1.5 rounded-t-lg"
+  data-end-datetime="{{ product.metafields.custom.data_oferta }}"
+>
+  <p class="text-white font-black text-xs sm:text-[10px] flex items-center justify-center gap-1">Essa oferta acaba em 
+  <span class="flex items-center">  {% render 'countdown-ico' %}<span class="time">00:00:00</span> </span> 
+  </p>
+</div>
+{% else %}
+  <div class="min-h-[26px]"></div>
+{% endif %}
+<div class="wishlist absolute right-4 top-[42px] z-[1]">
+  <button
+    class="flex items-center justify-center w-5 h-5 lg:w-6 lg:h-6 lg:[&>svg]:w-6 lg:[&>svg]:h-6 group data-[wishlist=true]:rounded-full"
+    aria-label="Adicionar a Lista de desejos"
+    onclick="handleStoreWishList('{{ product.handle }}', this)"
+  >
+    {% render 'ico-wish-shelf' %}
+  </button>
+</div>
+<div class="flex flex-col gap-2.5 absolute left-4 top-[42px] z-[1]">
+  {% if seals.size > 0 %}
+    {% for seal in seals %}
+      {% capture sealFormatted %}{{ seal }}.svg{% endcapture %}
+      <img
+        src="{{ sealFormatted | file_url  }}"
+        alt="{{ seal }}"
+        loading="lazy"
+        width="44"
+        height="44"
+      >
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class="pdp-img relative flex items-center justify-center px-4">
+  <a class="image-wrapper [&>img]:max-w-[205px] [&>img]:max-h-[205px] min-h-[205px] flex items-center justify-center" title="{{ product.title }}" href="{{ productUrl }}">
+    {% for img in product.media %}
+      {% if img.position == 1 %}
+        {% if img.media_type == 'video' %}
+          {{ img | video_tag: autoplay: true, loop: true, muted: true, width: 427, height: 650 }}
+        {% else %}
+          {{ product.featured_image | image_url: width: 2500, height: 2500 | image_tag }}
+
+        {% else %}
+
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </a>
+
+  {% assign iconMetaobject = shop.metaobjects.colecoes_permitidas['colecoes-permitidas'] %}
+  {% assign allowedCollections = iconMetaobject.colecoes | split: ',' %}
+  {% for i in (0..allowedCollections.size) %}
+    {% assign allowedCollections[i] = allowedCollections[i] | strip %}
+  {% endfor %}
+
+  <div class="absolute left-2 top-2">
+    {% for collection in product.collections %}
+      {% if allowedCollections contains collection.handle %}
+        {% capture imageUrl %}
+               {{ 'selo-' | append: collection.handle | append: '.png' | file_url }}
+             {% endcapture %}
+        <div class="mb-1">
+          <img
+            src="{{ imageUrl }}"
+            alt="{{ collection.title }}"
+            class="badge object-contain max-w-10"
+            width=""
+            height=""
+          >
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+</div>
+<a class="px-4 pdp-info-box flex flex-col gap-0 tablet:mt-1 pt-3 sm:pt-2" href="{{ productUrl }}" title="{{ product.title }}">
+  <h3 class="title-product text-sm text-custom-black font-black mb-4 h-10 line-clamp-2 text-center">
+    {{ productTitle }}
+  </h3>
+  {% comment %} <div class="shelf-price flex items-center gap-2 flex-wrap min-h-[28px] sm:min-h-fit justify-center">
+    {% if listPriceMoney %}
+      <p class="list-price text-[#92908F] line-through text-xs font-black">DE: {{ listPriceMoney }}</p>
+    {% endif %}
+    {% if discountTag %}
+      <p
+        class="discount-tag rounded-sm text-[10px] text-center p-1 bg-[#BA1A1A] text-white font-black"
+      >
+        {{ discountTag }}OFF
+      </p>
+    {% endif %}
+  </div> {% endcomment %}
+  <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-center gap-1"><span class="text-sm mt-1.5">R$</span>{{ bestPriceMoney }}</p>
+  <div class="installments">
+    <p class="text-[#777777] text-center text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black">{{ product.price | divided_by: 6 | money }}</span> em até <span class="font-black">12x</span></p>
+  </div>
+</a>
+
+
+{% if product.available %}
+<div class="px-4 pb-4 buy-btn space-shelf mt-4">
+    <input
+      type="hidden"
+      name="id"
+      value="{{ product.variants.first.id }}"
+    >
+    <div class="flex items-center">
+      <div class="quantity-buttons-wrapper flex items-center bg-[#35735A] max-w-[86px] rounded px-1.5 py-2.5">
+        <button
+          class="quantity-buttons minus flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black gap-[5px]"
+          data-action="minus"
+          aria-label="Diminuir quantidade"
+          type="button"
+            onclick="changeShelfQty(this, 'minus')"
+        >
+          {% render 'minus-ico' %}
+        </button>
+
+        <input
+          type="number"
+          name="quantity"
+          aria-label="quantidade"
+          min="1"
+          class="quantity_shelf mx-[3px] w-6 text-center bg-transparent text-white font-black text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none "
+          data-max="{{ product.variants.first.inventory_quantity }}"
+          value="1"
+        >
+
+        <button
+          class="quantity-buttons plus flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black"
+          data-action="plus"
+          aria-label="Aumentar quantidade"
+          type="button"
+            onclick="changeShelfQty(this, 'plus')"
+        >
+           {% render 'plus-ico' %}
+        </button>
+
+        <input type="hidden" name="product-quantity" value="{{ product.variants.first.inventory_quantity }}">
+      </div>
+
+      <div class="submit-btn-area w-full ml-[1px]">
+        <button
+          type="submit"
+          class="w-full bg-[#35735A] text-white px-4 py-2 rounded hover:bg-[#2e5d4d] transition duration-200 ease-out flex items-center justify-center"
+          onclick="addToCart(this)"
+          data-id="{{ product.variants.first.id }}"
+        >
+          {% render 'ico-cart-shelf' %}
+          Adicionar
+        </button>
+      </div>
+    </div>
+</div>
+{% else %}
+   
+  <div class="px-4 pb-4 not-available buy-btn mt-4">
+      <button class="bg-[#808080] w-full text-white px-4 py-2 rounded transition duration-200 ease-out flex items-center justify-center">Produto indisponível</button>
+  </div>
+    
+{% endif %}

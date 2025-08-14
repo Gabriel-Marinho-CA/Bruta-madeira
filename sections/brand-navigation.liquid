@@ -1,0 +1,88 @@
+{% if section.blocks.size > 0 %}
+    <div id="brandNav" class="mt-[120px] mb-[120px] sm:mb-4 md:mt-14">
+      <h1 class="text-center text-custom-black font-black text-[22px] mb-5 md:mb-4 md:text-lg uppercase">{{ section.settings.title_categ }}</h1>
+      <div class="relative mx-auto max-w-[1460px]">
+        <div class="container">
+            <div class="relative swiper">
+                <ul class="swiper-wrapper pt-4 pb-6">
+                  {% for category in section.blocks %}
+                    {% case category.type %}
+                      {% when 'custom-group' %}
+                        {% assign main = category.settings %}
+                        <li class="swiper-slide rounded-2xl">
+                          <a
+                            class="flex flex-col gap-4 justify-center items-center relative"
+                            href="{{  main.link_infocard  }}"
+                          >
+
+                            {% if main.image_infocard %}
+                              <div class="p-4 h-[97px] bg-white rounded-2xl flex items-center justify-center
+                                shadow-[0_6px_20px_0px_#0000000F]
+                                ">
+                                <img
+                                  class="rounded-2xl"
+                                  src="{{ main.image_infocard | image_url }}"
+                                  alt="{{ main.image_infocard.alt }}"
+                                  width="{{main.image_infocard.width}}"
+                                  height="{{main.image_infocard.height}}"
+                                  loading="lazy"
+                                >
+                              </div>
+                            {% endif %}
+                          </a>
+                        </li>
+                    {% endcase %}
+                  {% endfor %}
+                </ul>
+            </div>
+          </div>
+          <div class="select-none md:hidden prev z-[9] arrows absolute top-1/2 -translate-y-1/2 after:hidden flex items-center justify-center">
+            {% render 'btn-left-banner' %}
+          </div>
+          <div class="select-none md:hidden next right-0 z-[9] arrows absolute top-1/2 -translate-y-1/2 after:hidden flex items-center justify-center">
+            {% render 'btn-right-banner' %}
+          </div>
+      </div>
+      
+    </div>
+  {% endif %}
+
+  {% schema %}
+  {
+    "name": "Navegue por marca",
+    "max_blocks": 50,
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title_categ",
+        "label": "Titulo seção",
+        "default": "Navegue por marca"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "custom-group",
+        "name": "Infocard",
+        "settings": [
+          {
+            "type": "url",
+            "id": "link_infocard",
+            "label": "Link infocard"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_infocard",
+            "label": "Imagem marca | Imagem"
+          },
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Lista de marcas"
+      }
+    ]
+  }
+  {% endschema %}
+  

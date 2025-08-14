@@ -1,0 +1,60 @@
+<style>
+  .header_nav_submenu {
+    display: none;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 270px;
+    padding: 1rem 0;
+
+    &.active {
+      display: flex;
+    }
+
+    li {
+      border-bottom: 1px solid #cecece;
+      padding-inline: 0.5rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+</style>
+
+<nav class="w-full mr-3">
+  <ul class="flex items-center justify-between gap-2 relative">
+    {% for link in menu_departments %}
+      <li class="relative group">
+        <a
+          class="text-[#1C1B1A] uppercase text-base flex items-center gap-3 hover:text-[#CAC8A6] link_menu_header"
+          href="{{ link.url }}"
+          title="{{ link.title }}"
+        >
+          {{ link.title -}}
+
+          {% if link.links.size > 0 %}
+            {% render 'arrow-down-b' %}
+          {% endif %}
+        </a>
+        {% if link.links.size > 0 %}
+          <ul class="header_nav_submenu overflow-y-auto max-h-[71vh] w-max shadow-sm">
+            {% for subLink in link.links %}
+              <li>
+                <a
+                  href="{{ subLink.url }}"
+                  class="text-[#1B1B1B] hover:text-[#CAC8A6]"
+                  title="{{ subLink.title  }}"
+                >
+                  {{- subLink.title -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

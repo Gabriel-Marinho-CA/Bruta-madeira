@@ -1,0 +1,175 @@
+<style>
+    {% comment %} #institucional h1 {
+        color: #F68B1F;
+        font-size: 32px;
+        font-weight: 600;
+    } {% endcomment %}
+    #institucional h2,
+    #institucional h3 {
+      line-height: 25px;
+      font-size: 16px;
+        font-weight: 900;
+        text-align: left;
+        color: #303030;
+        margin-top: 2rem;
+        font-family: "area-bold";
+    }
+    #institucional .metafield-rich_text_field p {
+        font-size: 16px;
+        line-height: 25px;
+        color: #303030;
+        font-weight: 400;
+        text-align: justify;      
+    }
+    #institucional .metafield-rich_text_field p a{
+      color: #CE4D35;
+      text-decoration: underline;       
+  }
+    #institucional .metafield-rich_text_field p em{
+      margin-left: 15px;
+      font-style: normal;    
+  }
+    .template-institucional {
+      background-color: #F9F9F9;
+    }
+    #institucional .btn-wpp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    #institucional .btn-wpp::before {
+      content: "";
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIHZpZXdCb3g9IjAgMCAxNiAxNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTAuMzQxNzE5IDguNDY1OTVDMC4zNDEzNDQgOS44MjA3NiAwLjY5NTM0NCAxMS4xNDM2IDEuMzY4NDcgMTIuMzA5NkwwLjI3NzM0NCAxNi4yOTM1TDQuMzU0MzQgMTUuMjI0NUM1LjQ4MTk5IDE1LjgzODQgNi43NDU0MyAxNi4xNiA4LjAyOTM0IDE2LjE2MDFIOC4wMzI3MkMxMi4yNzEyIDE2LjE2MDEgMTUuNzIxMyAxMi43MTEyIDE1LjcyMzIgOC40NzIwMUMxNS43MjQgNi40MTc4MiAxNC45MjQ3IDQuNDg2MiAxMy40NzI2IDMuMDMyOTVDMTIuMDIwNyAxLjU3OTgyIDEwLjA4OTggMC43NzkxMzYgOC4wMzI0MSAwLjc3ODE5OEMzLjc5MzQ3IDAuNzc4MTk4IDAuMzQzNTMxIDQuMjI2OTUgMC4zNDE3ODEgOC40NjU5NSIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzQ0N18xMDgpIi8+CjxwYXRoIGQ9Ik0wLjA2Njg3NSA4LjQ2MzVDMC4wNjY0Mzc1IDkuODY3MDYgMC40MzMxMjUgMTEuMjM3MiAxLjEzMDI1IDEyLjQ0NUwwIDE2LjU3MTdMNC4yMjMxOSAxNS40NjQ0QzUuMzg2ODEgMTYuMDk4OCA2LjY5Njk0IDE2LjQzMzMgOC4wMzAwNiAxNi40MzM4SDguMDMzNUMxMi40MjQgMTYuNDMzOCAxNS45OTgxIDEyLjg2MDggMTYgOC40Njk4N0MxNi4wMDA3IDYuMzQxODggMTUuMTcyNyA0LjM0MDgxIDEzLjY2ODcgMi44MzU1QzEyLjE2NDYgMS4zMzAzNyAxMC4xNjQ2IDAuNTAwODc1IDguMDMzNSAwLjVDMy42NDIyNSAwLjUgMC4wNjg2MjUgNC4wNzI1IDAuMDY2ODc1IDguNDYzNVpNMi41ODE5NCAxMi4yMzdMMi40MjQyNSAxMS45ODY3QzEuNzYxMzcgMTAuOTMyNyAxLjQxMTUgOS43MTQ2OSAxLjQxMiA4LjQ2NEMxLjQxMzM3IDQuODE0MzEgNC4zODM2MyAxLjg0NSA4LjAzNiAxLjg0NUM5LjgwNDc1IDEuODQ1NzUgMTEuNDY3IDIuNTM1MjUgMTIuNzE3MiAzLjc4NjI1QzEzLjk2NzQgNS4wMzczNyAxNC42NTU0IDYuNzAwNSAxNC42NTQ5IDguNDY5MzhDMTQuNjUzMyAxMi4xMTkxIDExLjY4MyAxNS4wODg3IDguMDMzNSAxNS4wODg3SDguMDMwODhDNi44NDI1NiAxNS4wODgxIDUuNjc3MTIgMTQuNzY5IDQuNjYwNzUgMTQuMTY1OUw0LjQxODg4IDE0LjAyMjVMMS45MTI3NSAxNC42Nzk2TDIuNTgxOTQgMTIuMjM3WiIgZmlsbD0idXJsKCNwYWludDFfbGluZWFyXzQ0N18xMDgpIi8+CjxwYXRoIGQ9Ik02LjA0MjIzIDUuMTM0MjFDNS44OTMxIDQuODAyNzggNS43MzYxNiA0Ljc5NjA5IDUuNTk0MzUgNC43OTAyOEM1LjQ3ODIzIDQuNzg1MjggNS4zNDU0OCA0Ljc4NTY1IDUuMjEyODUgNC43ODU2NUM1LjA4MDEgNC43ODU2NSA0Ljg2NDQxIDQuODM1NTkgNC42ODIxIDUuMDM0NjVDNC40OTk2IDUuMjMzOSAzLjk4NTM1IDUuNzE1NCAzLjk4NTM1IDYuNjk0NzFDMy45ODUzNSA3LjY3NDAzIDQuNjk4NjYgOC42MjA1MyA0Ljc5ODEgOC43NTM0NkM0Ljg5NzY2IDguODg2MTUgNi4xNzUxNiAxMC45NjAyIDguMTk4NDEgMTEuNzU4QzkuODc5OTEgMTIuNDIxMSAxMC4yMjIxIDEyLjI4OTIgMTAuNTg3IDEyLjI1NkMxMC45NTIgMTIuMjIyOCAxMS43NjQ4IDExLjc3NDYgMTEuOTMwNiAxMS4zMDk4QzEyLjA5NjUgMTAuODQ1IDEyLjA5NjUgMTAuNDQ2NyAxMi4wNDY4IDEwLjM2MzRDMTEuOTk3IDEwLjI4MDUgMTEuODY0MyAxMC4yMzA3IDExLjY2NTIgMTAuMTMxMkMxMS40NjYyIDEwLjAzMTcgMTAuNDg3NSA5LjU1MDAzIDEwLjMwNSA5LjQ4MzU5QzEwLjEyMjUgOS40MTcyMSA5Ljk4OTg1IDkuMzg0MDkgOS44NTcxIDkuNTgzNEM5LjcyNDM1IDkuNzgyNCA5LjM0MzE2IDEwLjIzMDcgOS4yMjY5OCAxMC4zNjM0QzkuMTEwOTEgMTAuNDk2NSA4Ljk5NDczIDEwLjUxMyA4Ljc5NTczIDEwLjQxMzVDOC41OTY1NCAxMC4zMTM2IDcuOTU1NDggMTAuMTAzNyA3LjE5NDkxIDkuNDI1NTlDNi42MDMxNiA4Ljg5Nzk2IDYuMjAzNjYgOC4yNDY0IDYuMDg3NTQgOC4wNDcwOUM1Ljk3MTQxIDcuODQ4MDkgNi4wNzUxIDcuNzQwMjEgNi4xNzQ5MSA3LjY0MTAzQzYuMjY0MzUgNy41NTE4NCA2LjM3NDA0IDcuNDA4NTkgNi40NzM2NiA3LjI5MjRDNi41NzI5MSA3LjE3NjE1IDYuNjA2MDQgNy4wOTMyMSA2LjY3MjQxIDYuOTYwNDZDNi43Mzg4NSA2LjgyNzU5IDYuNzA1NiA2LjcxMTM0IDYuNjU1OTEgNi42MTE3OEM2LjYwNjA0IDYuNTEyMjEgNi4yMTkyMyA1LjUyNzc4IDYuMDQyMjMgNS4xMzQyMVoiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXJfNDQ3XzEwOCIgeDE9Ijc3Mi41NjgiIHkxPSIxNTUyLjMxIiB4Mj0iNzcyLjU2OCIgeTI9IjAuNzc4MTk4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiMxRkFGMzgiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBENjY5Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQxX2xpbmVhcl80NDdfMTA4IiB4MT0iODAwIiB5MT0iMTYwNy42NyIgeDI9IjgwMCIgeTI9IjAuNSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjRjlGOUY5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K");
+      display: block;
+      height: 18px;
+      width: 18px;
+      background-repeat: no-repeat;
+    }
+  </style>
+
+<section id="institucional">
+  <div class="container mb-28">
+      <div class="flex gap-5 py-4 mt-8 justify-around items-center md:overflow-x-auto md:overflow-y-hidden md:pb-2 md:justify-normal md:gap-4 md:px-2.5">
+      {% for link in linklists.all-institucional.links %}
+        {% assign titleActive = metaobject.titulo.value | default: '' %}
+        <div class="flex flex-col items-center w-full max-w-[177px] md:min-w-20">
+          <a href="{{ link.url }}" class="flex justify-center w-full flex-col items-center text-sm font-custom-black text-center  {% if link.title == titleActive %}font-black{% endif %}">
+            <div class="shadow-[0_4px_16px_0px_#00000033] w-full h-20 rounded-lg flex items-center justify-center mb-2 {% if link.title == titleActive %}bg-[#E2DCD2]{% else %}bg-white{% endif %}">
+                  {% capture iconFormatted %}icon-{{ link.handle }}.svg{% endcapture %}
+                  <img
+                    src="{{ iconFormatted | file_url  }}"
+                    loading="lazy"
+                    width="44"
+                    height="44"
+                  >
+            </div>
+           <span class="max-w-20"> {{ link.title }} </span>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="font-custom-black font-black text-2xl text-center mt-[100px]">
+        <h1> {{ metaobject.titulo }}</h1>
+    </div>
+
+    <div class="max-w-[900px] mx-auto mt-6">
+        {{ metaobject.texto | metafield_tag}}
+    </div>
+
+
+    {% if metaobject.titulo == 'Nossas Lojas' %}
+
+      <div class="grid grid-cols-3 xl:grid-cols-2 md:grid-cols-1 gap-5 items-center">
+        {% for store in section.blocks %}
+          {% case store.type %}
+            {% when 'store' %}
+
+              <div class="border border-[#C8C9C9] rounded-[5px] shadow-[3px_3px_5px_0px_#00000040] max-w-[440px] bg-white">
+                <div class="relative min-h-80 lg:min-h-full"> 
+                  <img
+                    src="{{ store.settings.image_store |  image_url }}"
+                    alt="{{ store.settings.image_store.alt }}"
+                    width="{{ store.settings.image_store.width }}"
+                    height="{{ store.settings.image_store.height }}"
+                    loading="lazy"
+                  >
+                    <div class="w-full bg-primary absolute bottom-0 py-1.5">
+                      <p class="text-center text-sm text-white font-bold">{{store.settings.store_title }}</p>
+                    </div>
+                </div>
+
+                <div class="p-4">
+                  <div class="mb-4">
+                    <p class="font-bold text-sm text-black">Endereço:</p>
+                    <p class="text-[13px] text-[#4C4D4D]">{{store.settings.store_address }}</p>
+                  </div>
+                  <div class="mb-4">
+                    <p class="font-bold text-sm text-black">Telefone:</p>
+                    <p class="text-[13px] text-[#4C4D4D]">{{store.settings.store_phone }}</p>
+                  </div>
+                  <div>
+                    <p class="font-bold text-sm text-black">Funcionamento:</p>
+                    <p class="text-[13px] text-[#4C4D4D]">{{store.settings.store_time_1 }}</p>
+                    <p class="text-[13px] text-[#4C4D4D]">{{store.settings.store_time_2 }}</p>
+                  </div>
+                    
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+
+    {% endif %}
+   
+  </div>
+</section> 
+
+  
+{% schema %}
+{
+  "name": "Institucional",
+  "tag": "section",
+  "settings": [
+  ],
+ "blocks": [
+    {
+      "type": "store",
+      "name": "stores",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_store",
+          "label": "Imagem da loja"
+        },
+        {
+          "type": "text",
+          "id": "store_title",
+          "label": "Cidade da loja",
+        },
+        {
+          "type": "text",
+          "id": "store_address",
+          "label": "Endereço da loja",
+        },
+        {
+          "type": "text",
+          "id": "store_phone",
+          "label": "Telefone da loja",
+        },
+        {
+          "type": "text",
+          "id": "store_time_1",
+          "label": "Horario de funcionamento - Dia de semana",
+        },
+        {
+          "type": "text",
+          "id": "store_time_2",
+          "label": "Horario de funcionamento - Final de semana",
+        },
+      ]
+    },
+  ]
+}
+{% endschema %}

@@ -1,0 +1,30 @@
+<div class="top-bar bg-primary p-1.5 md:px-0">
+  <div class="container mx-auto">
+    <div class="wrapper flex justify-end gap-4">
+      <div class="televendas !flex items-center md:justify-center gap-2 text-white text-[10px] font-black">
+        {% if icone1 != blank %}
+          {{ icone1 | image_url: width: 16, height: 16 | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'store-ico' %}
+        {% endif %}
+        {% if link1 != blank %}
+          <a href="{{ link1 }}" title="{{txt1}}">{{ txt1 }}</a>
+        {% else %}
+          {{ txt1 }}
+        {% endif %}
+      </div>
+      <div class="wpp !flex items-center  md:justify-center gap-2 text-white text-[10px] font-black">
+        {% if icone2 != blank %}
+          {{ icone2 | image_url: width: 16, height: 16 | image_tag: loading: 'lazy' }}
+        {% else %}
+          {% render 'phone-ico' %}
+        {% endif %}
+        {% if link2 != blank %}
+          <a target="_blank" href="{{ link2 }}" title="{{txt2}}">{{ txt2 }}</a>
+        {% else %}
+          {{ txt2 }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

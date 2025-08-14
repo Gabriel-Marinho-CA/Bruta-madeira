@@ -1,0 +1,701 @@
+<script src="{{ "Product.js" |  asset_url }}" defer></script>
+
+{% assign bestPrice = product.price | times: 1.0 | divided_by: 100 %}
+{% assign bestPriceMoney = product.price | money | replace: 'R$', ' ' %}
+
+{% if product.compare_at_price %}
+    {% assign listPrice = product.compare_at_price_min | times: 1.0 | divided_by: 100 %}
+  
+    {% if listPrice > bestPrice %}
+      {% assign listPriceMoney = product.compare_at_price_min | money %}
+      {% capture discountTag %}
+          {{  bestPrice | times: 100 |  divided_by: listPrice  | minus: 100  | times: -1 | floor }}%
+        {% endcapture %}
+    {% endif %}
+  {% endif %}
+
+{% comment %} === METAFIELDS ==== {% endcomment %}
+
+{% assign buyTogether = product.metafields.custom.compre_junto %}
+{% assign isService = product.metafields.custom.isService %}
+{% assign discountPriceValue =  product.metafields.custom.porcentagem_desconto %}
+{% assign discountCalc =  discountPriceValue |  divided_by: 100 %}
+
+{% if discountPriceValue %}                                
+  {% capture discountPriceFormatted %}
+    {{ product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | money }}
+  {% endcapture %}
+{% endif %}
+
+
+{% render 'breadcrumb', collection_name: product.title %}
+<div id="product" class="bg-[#F9F9F9] py-4 container md:px-0">
+  <div class="main-product bg-white px-5 py-6 flex gap-4 container lg:flex-col lg:px-0">
+    {% assign hasSize = false %}
+    {% assign hasFinishing = false %}
+
+    {% for option in product.options_with_values %}
+      {% if option.name == "Tamanho" %}
+        {% assign hasSize = true %}
+      {% endif %}
+      {% if option.name == "Acabamentos" %}
+        {% assign hasFinishing = true %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="left min-w-0 flex gap-3 w-full md:flex-col-reverse sm:px-4">
+      <div class="swiper swiper-thumbnails !min-w-20 w-full max-w-20 lg:max-w-full lg:!h-auto lg:mb-6">
+        <ul class="swiper-wrapper md:overflow-scroll gap-2 !w-20 md:!w-full [&>.swiper-slide-thumb-active]:border-[#CE4D35]">
+          {% unless hasSize and hasFinishing %}
+            {% for img in product.media %}
+              <li
+                class="swiper-slide w-20 max-w-20 lg:max-h-20 cursor-pointer rounded !h-auto border-2 border-[#C6C6C6]"
+                data-media="{{ img.alt | escape }}"
+              >
+                {% if img.media_type == 'video' %}
+                  <div class="p-2">
+                    {{ img | video_tag: autoplay: true, loop: true, muted: true }}
+                  </div>
+                {% else %}
+                  <div class="p-2 lg:max-h-20">
+                    <img
+                      src="{{ img | image_url }}"
+                      width="{{ img.width }}"
+                      height="{{ img.height }}"
+                      alt="{{ img.alt | escape }}"
+                      class="md:max-h-[75px] md:mx-auto"
+                    >
+                  </div>
+                {% endif %}
+              </li>
+            {% endfor %}
+          {% endunless %}
+        </ul>
+      </div>
+
+      <div class="min-w-0">
+        <div class="swiper swiper-main image wrapper-image w-full">
+          <ul class="swiper-wrapper w-full">
+            {% unless hasSize and hasFinishing %}
+              {% if product.images.size > 0 %}
+                {% for img in product.media %}
+                  {% if img.media_type == 'video' %}
+                    <li class="swiper-slide">
+                      {{ img | video_tag: image_size: '547px', autoplay: true, loop: true, muted: true, controls: true }}
+                    </li>
+                  {% else %}
+                    <li class="swiper-slide !block" data-media="{{ img.alt | escape }}">
+                      <img
+                        class="mx-auto max-w-[547px] max-h-[547px] lg:max-w-full"
+                        id="product-image"
+                        src="{{ img | image_url }}"
+                        alt="{{ img.alt | escape }}"
+                      >
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                <li>
+                  {{ product.featured_image | image_url: width: 547, height: 547 | image_tag }}
+                </li>
+              {% endif %}
+            {% endunless %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% if isService %}
+    {% else %}
+    <div class="right w-full min-w-[420px] lg:min-w-0 max-w-[420px] flex flex-col flex-1 sm:px-4">
+      <h1 class="font-black text-custom-black text-2xl ">{{ product.title }}</h1>
+      {% if  product.variants.size > 1  %}
+        <p>Variante: <span class="variant-selected-name">{{ product.selected_or_first_available_variant.title  }}</span> </p>      
+      {% endif %}
+
+      {% comment %} {% if product.available %} {% endcomment %}
+        <div class="flex flex-col pb-6 mt-6 border-b border-[#E2E2E2]">
+          <div class="discount-price flex flex-col gap-3">
+              <div class="flex items-end gap-3">
+                {% if listPriceMoney %}
+                    <p class="text-custom-black line-through text-sm font-black">DE: {{ listPriceMoney }}</p>
+                  {% endif %}
+                  {% if discountPriceValue %}
+                    <p class="text-custom-black line-through text-sm font-black">DE: <span class="list-price-discount-auto">
+                      {{ product.selected_or_first_available_variant.price | money}}
+                  
+                    </span> 
+                    </p>
+                {% endif %}
+                  {% if discountTag %}
+                    <p
+                      class="discount-tag rounded-sm text-xs text-center p-1 bg-[#BA1A1A] text-white font-black"
+                    >
+                      {{ discountTag }}OFF
+                    </p>
+                  {% endif %}
+              </div>
+          </div>
+          <div>
+            <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-start gap-1">
+                <span class="text-sm mt-1.5">R$</span>
+                    <span class="best-price-text">
+                    {% if discountPriceValue %}
+                  {{discountPriceFormatted}}
+                {% else %}
+                {{ bestPriceMoney }}
+                  
+                    {% endif %}
+                  </span>
+            </p>
+            <p class="text-custom-black text-start text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black installment-variant-value">
+                           {% assign installMentVariantWithDiscount = product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | divided_by: 12 | round: 2 | money%}
+
+                {% assign installmentVariant = product.selected_or_first_available_variant.price |  divided_by: 12 |  money  %}         
+                {% if discountPriceValue %}
+                  {{installMentVariantWithDiscount}}
+                  {% else %}
+                    {{ installmentVariant }}
+                {% endif %}
+              </span> em até <span class="font-black">12x</span></p>
+          </div>
+        </div>
+
+       <div>
+        {% if product.metafields.custom.cores %}
+          <fieldset class="cor-fieldset">
+            <legend class="font-bold pb-4">Cor</legend>
+            <div class="options-wrapper flex gap-4">
+              {% assign produtosRelacionados = product.metafields.custom.cores %}      
+              {% for produto in produtosRelacionados.value %}      
+                {% if produto.available %}
+                  <div>
+                    <a href="{{ produto.url }}" class="cursor-pointer">
+                      {% if produto.featured_image %}
+                        <img class="max-w-20 p-1 border-[#E2E2E5] border" src="{{ produto.featured_image | image_url: 'large' }}" width="{{ produto.featured_image.width }}" height="{{ produto.featured_image.height }}" alt="{{ produto.title }}">
+                      {% endif %}
+                    </a>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </fieldset>
+        {% endif %}
+      </div>
+
+
+      <div class="variants-area">
+        {% if product.variants.size > 0 %}
+          <div class="product-option">
+            <script>
+              window.allVariants = [
+                {% for variant in product.variants %}
+                  {
+                    id: {{ variant.id }},
+                    options: {
+                      {% for option in product.options_with_values %}
+                        "{{ option.name | handle }}": "{{ variant.options[forloop.index0] }}"{% unless forloop.last %},{% endunless %}
+                      {% endfor %}
+                    },
+                    inventory_quantity: {{ variant.inventory_quantity }}
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ];
+            </script>
+            {% for option in product.options_with_values %}
+
+              {% unless option.name == 'Title' and option.values.size == 1 and option.values[0] == 'Default Title' %}
+                <fieldset class="tamanho-fieldset">
+                  <legend class="text-[#333333] pt-6 pb-1.5 text-xs font-black text-custom-black">
+                    {% if option.name == "Tamanho" %}
+                      TAMANHOS:
+                    {% else %}
+                      {{ option.name }}:
+                    {% endif %}
+                  </legend>
+                  <div class="options-wrapper flex items-start justify-start gap-2 flex-wrap">
+                    {% for value in option.values %}
+                      <div>
+                        {% assign variantPrice = value.variant.price | money %}
+                        {% assign variantListPrice = value.variant.compare_at_price | money | split: 'R$'%}
+               
+                        {% assign installMentVariantWithDiscount = value.variant.price | times: discountCalc | minus: value.variant.price | abs | divided_by: 12 | round: 2 | money%}
+
+                        {% assign installmentVariant = value.variant.price |  divided_by: 12 |  money  %}                     
+
+                        {% assign discountListPriceFormattedVariant = value.variant.price | times: discountCalc | minus: value.variant.price | abs | money %}
+
+                        <input
+                          type="radio"
+                          name="{{ option.name  | handle }}"
+                          value="{{ value }}"
+                          id="{{ option.name | handleize }}-{{ value | handleize }}"
+                          class="hidden"
+                          onclick="handleVariant(this)"
+                          data-spot-price="{{ variantPrice }}"
+                          data-list-price="{{ variantListPrice[1] }}"
+                          data-variant-title="{{ value.variant.title }}"
+                          {% if discountPriceValue %}
+                          data-installment-price="{{ installMentVariantWithDiscount }}"
+                          {% else %}
+                          data-installment-price="{{ installmentVariant }}"
+                          {% endif %}
+                          data-list-price-discount="{{ discountListPriceFormattedVariant }}"
+                        >
+            
+                        <label
+                          class="relative min-w-[67px] h-[30px] px-4  cursor-pointer rounded-3xl flex text-custom-black items-center text-xs font-black justify-center border border-[#C6C6C6] 
+                          data-[disabled=true]:bg-[#F5F5F5] data-[disabled=true]:border-[#CBCBCB] data-[disabled=true]:text-[#CBCBCB] 
+                          data-[disabled=true]:before:bg-[#CBCBCB] data-[disabled=true]:before:w-8 data-[disabled=true]:before:h-[2px] 
+                          data-[disabled=true]:before:absolute data-[disabled=true]:before:rotate-[-45deg] data-[selected-variant]:bg-[#E9FFED]  
+                          data-[selected-variant]:border-[#35735A] data-[disabled=true]:cursor-not-allowed 
+                          data-[disabled=true]:pointer-events-none"
+                          for="{{ option.name | handleize }}-{{ value | handleize }}"
+                          {% if value.variant.inventory_quantity == 0 %}
+                            data-disabled="true"
+                          {% endif %}
+                        >
+                          {{ value }}
+                        </label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </fieldset>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+        <div class="buy-area mt-4">
+            <div class="buy-btn flex items-center gap-px justify-between h-12">
+            {% comment %} <input
+              id="id-product"
+              type="hidden"
+              name="id"
+              value="{{ product.variants.first.id  }}"
+            > {% endcomment %}
+            {%  if product.available %}
+        <div class="quantity-buttons-wrapper flex items-center bg-[#35735A] max-w-28 w-full h-full justify-around rounded-l-xl px-1.5 py-2.5">
+          <button
+            class="quantity-buttons minus flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black gap-[5px]"
+            data-action="minus"
+            aria-label="Diminuir quantidade"
+            type="button"
+            onclick="changeShelfQty(this, 'minus')"
+          >
+            {% render 'minus-ico' %}
+          </button>
+
+          <input
+            type="number"
+            name="quantity"
+            aria-label="quantidade"
+            min="1"
+            class="quantity_shelf mx-[3px] w-6 text-center bg-transparent text-white font-black text-base [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none "
+            data-max="{{ product.variants.first.inventory_quantity }}"
+            value="1"
+          >
+
+          <button
+            class="quantity-buttons plus flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black"
+            data-action="plus"
+            aria-label="Aumentar quantidade"
+            type="button"
+            onclick="changeShelfQty(this, 'plus')"
+          >
+            {% render 'plus-ico' %}
+          </button>
+
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        </div>
+
+        <div class="h-full bg-[#35735A] w-full rounded-r-lg flex items-center justify-center">
+          <button
+            id="buy-button"
+            type="submit"
+            name="checkout"
+            onclick="addToCart(this)"
+            data-id="{{ product.selected_or_first_available_variant.id }}"
+            class="flex items-center justify-center gap-4 text-base font-custom-black text-white font-black w-full h-full"
+          >
+            Comprar
+          </button>
+        </div>
+          {% else %}
+            <div class="h-full bg-[#808080] w-full rounded-r-lg flex items-center justify-center">
+            <button
+              type="submit"
+              name="checkout"
+              disabled
+              data-id="{{ product.selected_or_first_available_variant.id }}"
+              class="flex items-center justify-center gap-4 text-base font-custom-black  text-white font-black w-full h-full"
+            >
+              SEM ESTOQUE DISPONÍVEL
+            </button>
+          </div>
+          {% endif %}
+          </div>
+        </div>
+        {%  if product.available %}
+        <div class="shipping-area flex flex-col gap-1.5 mt-6 rounded-lg p-4 border border-[#E2E2E2]">
+          <div class="flex items-center gap-2">
+            <p class="text-sm text-[#5E5E5E] font-bold">Calcule seu frete</p>
+          </div>
+          <div class="h-[40px] flex gap-4 items-center">
+            <input
+              type="text"
+              class="h-full border w-full border-[#C6C6C6] rounded py-3.5 px-6 max-w-64"
+              placeholder="CEP"
+              id="cep-calc"
+              placeholder="99999-999"
+              maxlength="9"
+            >
+            <button
+              class="h-full bg-[#35735A] px-5 max-w-[118px] text-white transition flex-1 rounded-lg font-black transition duration-200 ease-out hover:bg-[#2e5d4d]"
+             id="calc-pdp-shipping-btn" onclick="calculateShipping('{{ product.variants.first.id }}')"
+              data-skuId="{{ product.variants.first.id }}"
+              data-weight="{{ product.variants.first.weight }}"
+              data-value="{{ product.price | money_without_currency }}"
+            >
+              Calcular
+            </button>
+          </div>
+          <a
+            class="max-w-[calc(100%-133px)] mt-1 w-full mr-auto text-start text-[#35735A] text-sm font-bold"
+            href="https://buscacepinter.correios.com.br/app/endereco/index.php"
+            target="_blank"
+            >Não sei meu cep</a
+          >
+          <div
+            class="spinner hidden mt-5 mx-auto w-6 h-6 border-[#e9e9e9] border-4 border-t-primary rounded-full animate-spin"
+          ></div>
+          <div
+            id="shipping-area"
+            class="border-none [&:has(div)]:border-[#e5e7eb] [&:has(div)]:border-solid rounded [&:has(div)]:mt-4 border"
+          ></div>
+        </div>
+      {% endif %}
+      {% comment %} {% else %} {% endcomment %}
+        {% comment %} <div class="px-2 pb-3 not-available buy-btn">
+          {% comment %} <button class="bg-[#F68B1F] text-white w-full p-1.5">Avise-me quando chegar</button> {% endcomment %}
+        </div> {% endcomment %}
+      {% comment %} {% endif %} {% endcomment %}
+    </div>
+  {% endif %}
+  </div>
+  {% if buyTogether %}
+    <section class="compre-junto bg-white px-6 py-10 container my-5 lg:px-4">
+      <h2 class="mb-6 font-black text-[22px] text-custom-black">COMPRE JUNTO</h2>
+      <div class="wrapper flex items-center gap-2 justify-between p-4 md:flex-col md:gap-8">
+        <div class="box-2">
+          {% comment %} <ul class="flex flex-col gap-8 justify-between items-center">
+            {% assign count = 0 %}
+            {% for item in buyTogether.value %}
+                <li class="rounded border border-white bg-white relative transition-shadow hover:shadow-[0_6px_20px_0px_#0000000F]">
+                    {% render 'shelf-pdp', product: item %}
+                </li>
+              {% assign count = count | plus: 1 %}
+            {% endfor %}
+          </ul> {% endcomment %}
+          {% assign totalPriceBt = 0 %}
+          {% assign listPriceBt  = 0%}
+          {% assign count = 0 %}
+          {% assign variantIds = "" %}
+          <ul class="flex flex-row items-center gap-4 lg:gap-2.5">
+            {% assign count = 0 %}
+            {% for item in buyTogether.value %}
+              {% if count == 2 %}
+                {% break %}
+              {% endif %}
+              <li class="rounded border border-white max-w-[325px] bg-white relative transition-shadow hover:shadow-[0_6px_20px_0px_#0000000F] lg:[&>.space-shelf]:hidden 
+                lg:[&>.pdp-info-box>.installments]:hidden 
+                lg:[&>.pdp-info-box>.shelf-price]:hidden 
+                lg:[&>.pdp-img>.image-wrapper>img]:max-w-[150px]
+                sm:max-w-[164px]
+                lg:shadow-[0_6px_20px_0px_#0000000F]
+                "
+            >
+                {% render 'shelf-pdp', product: item %}
+              </li>
+
+              {% assign productPrice = item.price  %}
+              {% assign totalPriceBt = totalPriceBt | plus: productPrice %}
+              {%  assign listPriceBt = listPriceBt | plus: item.compare_at_price %}
+              {% assign variantIds = variantIds | append: item.variants.first.id | append: "," %}
+              {% assign count = count | plus: 1 %}
+          
+              {% if count == 1 %}
+                <div class="lg:[&>svg]:max-w-[30px]">
+                    {% render 'ico-plus-bt' %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          
+        </div>
+        <div class="lg:[&>svg]:max-w-[30px]">
+          {% render 'ico-equal-bt' %}
+        </div>
+        <div class="buy-area flex flex-col text-center flex-1 max-w-[331px]">
+          <p id="quantity-buytogether" class="text-2xl font-black text-custom-black">Compre 2 produtos</p>
+          <div class="flex flex-col pb-6 mt-6 border-b border-[#E2E2E2]">
+            <div class="discount-price flex flex-col gap-3 mb-6">
+                <div class="flex items-end gap-3 justify-center">
+                    {% if listPriceBt > totalPriceBt %}
+                        {% capture discountTagBt %}
+                            {{  totalPriceBt | times: 100 |  divided_by: listPriceBt  | minus: 100  | times: -1 | floor }}%
+                          {% endcapture %}
+                      {% endif %}
+                  {% if listPriceBt %}
+                      <p class="text-custom-black line-through text-sm font-black">DE: {{ listPriceBt | money}}</p>
+                    {% endif %}
+                    {% if discountTagBt %}
+                      <p
+                        class="discount-tag rounded-sm text-xs text-center p-1 bg-[#BA1A1A] text-white font-black"
+                      >
+                        {{ discountTagBt }}OFF
+                      </p>
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+              <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-center gap-1">
+                  <span class="text-sm mt-1.5">R$</span>
+                                        <span class="best-price-text">
+                    {% if discountPriceValue %}
+ {{discountPriceFormatted}}
+                {% else %}
+         {{ totalPriceBt | money }}
+                  
+                    {% endif %}
+                  </span>
+           
+              </p>
+              <p class="text-custom-black text-center text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black installment-variant-value">
+                {% assign installMentVariantWithDiscount = product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | divided_by: 12 | floor | money%}
+
+                {% assign installmentVariant = product.selected_or_first_available_variant.price |  divided_by: 12 |  money  %}         
+                {% if discountPriceValue %}
+                  {{installMentVariantWithDiscount}}
+                  {% else %}
+                    {{ installmentVariant }}
+                {% endif %}
+                </span> em até <span class="font-black">12x</span></p>
+            </div>
+          </div>
+          {% comment %} <p class="font-medium text-xl leading-6">
+            por
+            <span class="text-[32px] leading-9 font-extrabold text-[#52AE32]" id="price-combine-pix">R$ 3.070,22</span>
+          </p>
+          <p class="text-sm">
+            ou <span id="price-combine">R$ 3.599,90</span> em 10x de <span id="price-installment">R$ 359,99</span> sem
+            juros
+          </p> {% endcomment %}
+          <button
+            class="rounded-lg bg-[#35735A] w-full h-[45px] transition duration-200 ease-out hover:bg-[#2e5d4d] flex items-center justify-center text-white font-black"
+            id="buy-all"
+            onclick="addBuyTogether(this)"
+            data-variants="{{ variantIds | strip }}"
+          >
+            Comprar junto
+          </button>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+{% if product.description %}
+  <section id="pdp-info" class="container bg-white px-6 py-10 sm:px-4">
+    <div class="mb-6">
+        <p class="font-black text-[22px] text-custom-black">DESCRIÇÃO DO PRODUTO</p>
+    </div>
+    <div class="text-custom-black">
+      {{ product.description }}
+    </div>
+  </section>
+{% endif %}
+
+  {% render 'tech-information', product: product %}
+
+</div>
+<section id="would_like_too" class="relative pb-20 mt-[120px]">
+  <div
+    class="product-recommendations relative"
+    data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=5&intent=related"
+  >
+    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+      {% if recommendations.intent == 'related' %}
+        <h2 class="text-center text-custom-black font-black text-[22px] mb-10 md:mb-8 md:text-lg uppercase">
+          VOCÊ TAMBÉM PODE GOSTAR
+        </h2>
+      {% endif %}
+      <div class="relative mx-auto max-w-[1460px]">
+        <div class="container">
+          <div class="swiper">
+            <ul class="swiper-wrapper collection-showcase summary">
+              {%- for product in recommendations.products -%}
+                <li class="swiper-slide rounded-lg border border-white bg-white transition-shadow hover:shadow-[0_6px_20px_0px_#0000000F]">
+                  {% render 'shelf-pdp',
+                    product: product,
+                  %}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+      </div>
+      <div class="select-none swiper-button-prev-custom md:hidden z-[9] absolute top-1/2 -translate-y-1/2 after:hidden flex items-center justify-center">
+        <div class=" flex items-center justify-start md:justify-center">
+          {% render 'btn-left-banner' %}
+        </div>
+      </div>
+      <div class="select-none swiper-button-next-custom z-[9] after:hidden flex cursor-pointer absolute top-1/2 -translate-y-1/2 right-0 md:hidden">
+        <div class=" flex items-center justify-end md:justify-center">
+          {% render 'btn-right-banner' %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Produto",
+  "tag": "section"
+}
+{% endschema %}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.title | escape }}",
+
+    "url": "{{ shop.url }}{{ product.url }}",
+    {% if product.featured_image %}
+      {% assign imageSize = product.featured_image.width | append: 'x' %}
+      "image": [
+        "https:{{ product.featured_image.src | image_url: imageSize }}"
+      ],
+    {% endif %}
+    "description": "{{ product.description | strip_html | escape }}",
+    "brand": {
+      "@type": "Thing",
+      "name": "{{ product.vendor | escape }}"
+    },
+    {% if product.variants %}
+      "offers": [
+        {% for variant in product.variants %}
+          {
+            "@type" : "Offer",
+            "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+            "price" : "{{ variant.price | divided_by: 100.00 }}",
+            "priceCurrency" : "{{ shop.currency }}",
+            "url" : "{{ shop.url }}{{ variant.url }}",
+            "itemOffered" :
+            {
+                "@type" : "Product",
+                {% if variant.image %}
+                  {% assign variantImageSize = variant.image.width | append: 'x' %}
+                  "image": "http:{{ variant.image.src | image_url: variantImageSize }}",
+                {% endif %}
+                {% if variant.title != blank %}
+                  "name" : "{{ variant.title | escape }}",
+                {% endif %}
+                {% if variant.sku != blank %}
+                  "sku": "{{ variant.sku }}",
+                {% endif %}
+                {% if variant.weight != blank %}
+                  "weight": {
+                    "@type": "QuantitativeValue",
+                    {% if variant.weight_unit != blank %}
+                      "unitCode": "{{ variant.weight_unit }}",
+                    {% endif %}
+                    "value": "{{ variant.weight | weight_with_unit: variant.weight_unit }}"
+                  },
+                {% endif %}
+                "url": "{{ shop.url }}{{ variant.url }}"
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    {% endif %}
+  }
+</script>
+
+<script type="application/json" id="variant-images-json">
+{
+  {% assign comma = "" %}
+  {% assign addedKey = "" %}
+
+  {% for media in product.media %}
+    {% assign alt = media.alt | downcase | strip %}
+    {% assign key = alt | replace: " ", "-" %}
+
+    {% unless addedKey contains key %}
+      {{ comma }}"{{ key }}": [
+        {% assign innerComma = "" %}
+         {% for m in product.media %}
+          {% assign mAlt = m.alt | downcase | strip | replace: "  ", " " %}
+          {% assign mKey = mAlt | replace: " ", "-" %}
+          {% if mKey == key %}
+            {{ innerComma }}"{{ m.preview_image | image_url: width: 800 }}"
+            {% assign innerComma = "," %}
+          {% endif %}
+        {% endfor %}
+      ]
+
+      {% assign comma = "," %}
+      {% assign addedKey = addedKey | append: key | append: "," %}
+    {% endunless %}
+  {% endfor %} 
+}
+</script>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.title | escape }}",
+    "productID": "{{ product.variants[0].sku }}",
+    "sku": "{{ product.variants[0].sku }}",
+    "gtin": "{{ product.variants[0].barcode }}",
+    "url": "{{ shop.url }}{{ product.url }}",
+    "description": "{{ product.description | strip_html | escape }}",
+    {% if product.featured_image %}
+    {% assign imageSize = product.featured_image.width | append: 'x' %}
+    "image": [ "https:{{ product.featured_image.src | image_url: imageSize }}" ],
+    {% endif %}
+    "itemCondition": "https://schema.org/NewCondition",
+    "hasAdultConsideration": "https://schema.org/AlcoholConsideration",
+    "category": "{{ product.metafields.custom.tipo | escape }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "{{ product.vendor | escape }}"
+    },
+    "countryOfOrigin": {
+      "@type": "Country",
+      "name": "{{ product.metafields.custom.pais | escape }}",
+    },
+    "weight": {
+      "@type": "QuantitativeValue",
+      "value": {{ product.variants[0].weight }},
+      "unitCode": "GRM"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price" : "{{ product.variants[0].compare_at_price | divided_by: 100.00 }}",
+      "priceValidUntil": {{ 'now' | date: '%s' | plus: 7776000 | date: '%Y-%m-%d' }},
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price" : "{{ product.variants[0].price | divided_by: 100.00 }}",
+        "priceCurrency": "BRL"
+      },
+      "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+      "acceptedPaymentMethod": [
+        "CreditCard",
+        "Boleto",
+        "Pix"
+      ],
+    }
+  }
+</script>

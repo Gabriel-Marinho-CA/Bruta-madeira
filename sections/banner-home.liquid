@@ -1,0 +1,88 @@
+<div id="main-banner">
+  <div class="swiper">
+    <ul class="swiper-wrapper">
+      {% for slide in section.blocks %}
+        {% case slide.type %}
+          {% when 'custom-group' %}
+            {% if slide.settings.image_slide != blank %}
+              <li class="swiper-slide">
+                {% comment %} {% if slide.settings.link_banner != blank %} {% endcomment %}
+                  <a
+                    href="{{ slide.settings.link_banner }}"
+                    {% if slide.settings.image_slide.alt != blank %}
+                      title="{{ slide.settings.image_slide.alt  }}" 
+                    {% else %}
+                      title="Banner"
+                    {% endif %}
+                  >
+                    <picture>
+                      <source media="(min-width:767px)" srcset="{{ slide.settings.image_slide | image_url }}">
+                      <source media="(max-width:766px)" srcset="{{ slide.settings.image_slide_mob | image_url }}">
+                      <img
+                        class="w-full"
+                        src="{{ slide.settings.image_slide | image_url}}"
+                        {% if slide.settings.image_slide.alt != blank %}
+                          alt="{{ slide.settings.image_slide.alt }}"
+                        {% else %}
+                          alt="Banner"
+                        {% endif %}
+                        width="{{  slide.settings.image_slide.width }}"
+                        height="{{ slide.settings.image_slide.height }}"
+                        loading="eager"
+                      >
+                    </picture>
+                  </a>
+                {% comment %} {% endif %} {% endcomment %}
+              </li>
+            {% endif %}
+          {% else %}
+
+        {% endcase %}
+      {% endfor %}
+    </ul>
+    {% comment %} <div class="swiper-pagination [&>span]:bg-white  [&>span]:opacity-100 [&>span]:border [&>span]:border-white [&>span]:h-[13px] [&>span]:w-[13px] [&>span]:rounded-full [&>span.swiper-pagination-bullet-active]:bg-black"></div> {% endcomment %}
+
+    <div class="swiper-button-prev after:hidden [&>svg]:!h-auto [&>svg]:min-w-[12px] [&>svg]:max-h-5 [&>svg]:max-w-5 !w-full max-w-12 max-h-12 bg-[#FFFFFF26] rounded-2xl shadow-[0_4px_15px_0px_#0000001A] backdrop-blur">
+      {% render 'arrow-left' %} 
+    </div>
+    <div class="swiper-button-next after:hidden [&>svg]:!h-auto [&>svg]:max-h-5 [&>svg]:max-w-5 [&>svg]:min-w-[12px] !w-full max-w-12 max-h-12 bg-[#FFFFFF26] rounded-2xl shadow-[0_4px_15px_0px_#0000001A] backdrop-blur">
+      {% render 'arrow-right' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner principal",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "custom-group",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_slide",
+          "label": "Slider image desktop"
+        },
+        {
+          "type": "url",
+          "id": "link_banner",
+          "label": "Link banner desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_slide_mob",
+          "label": "Slider image mobile"
+        },
+        {
+          "type": "url",
+          "id": "link_banner_mob",
+          "label": "Link banner mobile"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

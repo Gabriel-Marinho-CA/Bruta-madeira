@@ -1,0 +1,304 @@
+{
+  "sections": {
+    "main": {
+      "type": "banner-home",
+      "blocks": {
+        "custom_group_gVJfKE": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/Preenchimento_generativo_4_1.png",
+            "link_banner": "shopify://pages/contact",
+            "image_slide_mob": "shopify://shop_images/image_21_42d05bb0-2eb5-4443-be0d-c92e24ff9522.png",
+            "link_banner_mob": "shopify://pages/contact"
+          }
+        },
+        "custom_group_39rEQt": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/Preenchimento_generativo_4_1.png",
+            "link_banner": "shopify://pages/contact",
+            "image_slide_mob": "shopify://shop_images/image_21_42d05bb0-2eb5-4443-be0d-c92e24ff9522.png",
+            "link_banner_mob": "shopify://pages/contact"
+          }
+        }
+      },
+      "block_order": ["custom_group_gVJfKE", "custom_group_39rEQt"],
+      "settings": {}
+    },
+    "deals-home": {
+      "type": "deals-home",
+      "blocks": {
+        "offer_BWMF4V": {
+          "type": "offer",
+          "settings": {
+            "title": "Envio imediato",
+            "subtitle": "para todo o Brasil",
+            "image_deals": "shopify://shop_images/deals-shipping.svg"
+          }
+        },
+        "offer_eRWXeh": {
+          "type": "offer",
+          "settings": {
+            "title": "Pagamento facilitado",
+            "subtitle": "Parcele em até 12x sem juros",
+            "image_deals": "shopify://shop_images/hand-credit-card.svg"
+          }
+        },
+        "offer_bqpxJz": {
+          "type": "offer",
+          "settings": {
+            "title": "Pague com pix",
+            "subtitle": "e ganhe 5% OFF",
+            "image_deals": "shopify://shop_images/Frame_2608476.svg"
+          }
+        },
+        "offer_c7jx3L": {
+          "type": "offer",
+          "settings": {
+            "title": "Compra Segura",
+            "subtitle": "Confiança e garantia BRUTA",
+            "image_deals": "shopify://shop_images/shield-chekmark.svg"
+          }
+        },
+        "offer_Jfp9zE": {
+          "type": "offer",
+          "settings": {
+            "title": "Retire na loja",
+            "subtitle": "compre no site e retire na loja",
+            "image_deals": "shopify://shop_images/store-modern-2.svg"
+          }
+        }
+      },
+      "block_order": [
+        "offer_BWMF4V",
+        "offer_eRWXeh",
+        "offer_bqpxJz",
+        "offer_c7jx3L",
+        "offer_Jfp9zE"
+      ],
+      "settings": {}
+    },
+    "categories-navigation": {
+      "type": "categories-navigation",
+      "blocks": {
+        "custom_group_QPXcQb": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_94ktfR": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_gG4GFQ": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_KFV3VC": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_hXthMp": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_6Qgdj7": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_QfqMp9": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        },
+        "custom_group_zLaXQK": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+          }
+        }
+      },
+      "block_order": [
+        "custom_group_QPXcQb",
+        "custom_group_94ktfR",
+        "custom_group_gG4GFQ",
+        "custom_group_KFV3VC",
+        "custom_group_hXthMp",
+        "custom_group_6Qgdj7",
+        "custom_group_QfqMp9",
+        "custom_group_zLaXQK"
+      ],
+      "settings": { "title_categ": "Navegue por categorias" }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_xFKXhf": {
+          "type": "collection",
+          "name": "Col",
+          "settings": { "collection": "bruta" }
+        }
+      },
+      "block_order": ["collection_xFKXhf"],
+      "settings": { "title": "<h2>Mais Vendidos</h2>" }
+    },
+    "brand-navigation": {
+      "type": "brand-navigation",
+      "blocks": {
+        "custom_group_QRzY9b": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/image_3_b51f3dda-f3eb-46de-badc-deece7ff6107.png"
+          }
+        },
+        "custom_group_J9jkXJ": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/image_4.png"
+          }
+        },
+        "custom_group_JF9fL4": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/image_5.png"
+          }
+        },
+        "custom_group_HhEUtd": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/image_6.png"
+          }
+        },
+        "custom_group_HzgwBb": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/image_7.png"
+          }
+        },
+        "custom_group_Egwnzk": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/3a267c8c4ed28b6942d5a9b24fe12e3a335d1a0f.png"
+          }
+        },
+        "custom_group_3eqigH": {
+          "type": "custom-group",
+          "settings": {
+            "link_infocard": "shopify://pages/contact",
+            "image_infocard": "shopify://shop_images/5ae4588ab13d72f4cd4fa20341f6643245536fe2.png"
+          }
+        }
+      },
+      "block_order": [
+        "custom_group_QRzY9b",
+        "custom_group_J9jkXJ",
+        "custom_group_JF9fL4",
+        "custom_group_HhEUtd",
+        "custom_group_HzgwBb",
+        "custom_group_Egwnzk",
+        "custom_group_3eqigH"
+      ],
+      "settings": { "title_categ": "Navegue por marca" }
+    },
+    "main-banners": {
+      "type": "main-banners",
+      "blocks": {
+        "custom_group_KVK7Pq": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/Frame_2608712.png",
+            "link_banner": "shopify://pages/contact",
+            "image_slide_mob": "shopify://shop_images/Frame_2608712.png",
+            "link_banner_mob": "shopify://pages/contact"
+          }
+        },
+        "custom_group_GnNfDd": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/Frame_2608713.png",
+            "link_banner": "shopify://pages/contact",
+            "image_slide_mob": "shopify://shop_images/Frame_2608713.png",
+            "link_banner_mob": "shopify://pages/contact"
+          }
+        }
+      },
+      "block_order": ["custom_group_KVK7Pq", "custom_group_GnNfDd"],
+      "settings": {}
+    },
+    "collection-list-bestoffer": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_DzzEGW": {
+          "type": "collection",
+          "settings": { "collection": "bruta" }
+        }
+      },
+      "block_order": ["collection_DzzEGW"],
+      "settings": { "title": "<p>PRINCIPAIS OFERTAS</p>" }
+    },
+    "main-banners-solo": {
+      "type": "main-banners",
+      "blocks": {
+        "custom_group_ViDANY": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/Frame_2608715.png",
+            "link_banner": "shopify://pages/contact",
+            "image_slide_mob": "shopify://shop_images/Frame_2608715_1.png",
+            "link_banner_mob": "shopify://pages/contact"
+          }
+        }
+      },
+      "block_order": ["custom_group_ViDANY"],
+      "settings": {}
+    },
+    "collection-list-bestsellers": {
+      "type": "collection-list",
+      "blocks": {
+        "collection_rcGCVQ": {
+          "type": "collection",
+          "settings": { "collection": "bruta" }
+        }
+      },
+      "block_order": ["collection_rcGCVQ"],
+      "settings": { "title": "<p>FERRAMENTAS ELÉTRICAS</p>" }
+    }
+  },
+  "order": [
+    "main",
+    "deals-home",
+    "categories-navigation",
+    "collection-list",
+    "brand-navigation",
+    "main-banners",
+    "collection-list-bestoffer",
+    "main-banners-solo",
+    "collection-list-bestsellers"
+  ]
+}

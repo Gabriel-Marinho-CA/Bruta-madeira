@@ -1,0 +1,61 @@
+<div id="banners-home" class="container mb-[70px] mt-20">
+    <div class="hide-mob">
+        <ul class="slider-wrapper-1 flex justify-center items-center gap-5 md:flex-col">
+            {% for slide in section.blocks %}
+              {% case slide.type %}
+                {% when 'custom-group' %}
+                  {% if slide.settings.image_slide != blank %}
+                    <li class="slide w-full">
+                      {% if slide.settings.link_banner != blank %}
+                        <a href="{{ slide.settings.link_banner }}">
+                          {{ slide.settings.image_slide | image_url: width: 1360 | image_tag: loading: 'eager' }}
+                        </a>
+                      {% else %}
+                        {{ slide.settings.image_slide | image_url: width: 1360 | image_tag: loading: 'eager' }}
+                      {% endif %}
+                    </li>
+                  {% endif %}
+                {% else %}
+    
+              {% endcase %}
+            {% endfor %}
+          </ul>
+    </div>
+  </div>
+  
+  {% schema %}
+  {
+    "name": "Banners",
+    "tag": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "custom-group",
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_slide",
+            "label": "Banner image desktop"
+          },
+          {
+            "type": "url",
+            "id": "link_banner",
+            "label": "Link banner desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_slide_mob",
+            "label": "Banner image mobile"
+          },
+          {
+            "type": "url",
+            "id": "link_banner_mob",
+            "label": "Link banner mobile"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}
+  

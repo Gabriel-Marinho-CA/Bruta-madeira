@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .container { 
+        @apply px-4
+    }
+}
+
+@layer base {
+    @font-face {
+      font-family: "area-regular";
+      src: url("https://cdn.shopify.com/s/files/1/0832/0850/3616/files/fonnts.com-Area_Normal_Regular.otf") format("opentype");
+    }
+    @font-face {
+        font-family: "area-bold";
+        src: url("https://cdn.shopify.com/s/files/1/0832/0850/3616/files/fonnts.com-Area_Normal_Bold.otf?v=1746555878") format("opentype");
+      }
+  }
+
+  @layer utilities {
+    .ul-alternate > li:nth-child(odd) {
+      @apply bg-[#F1F1F1];
+    }
+  }
+  

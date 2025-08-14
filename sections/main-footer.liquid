@@ -1,0 +1,260 @@
+<script src="{{ "Footer.js" |  asset_url }}" defer></script>
+
+{% assign main = section.settings %}
+
+<style>
+  .contact-form {
+    width: 100%;
+  }
+  </style>
+
+<div id="footer" class="bg-[#F9F9F9]">
+  <div class="container py-8">
+    <div class="wrapper flex justify-between gap-4 lg:text-center lg:gap-6 md:flex-col">
+      <div class="logo-info-area flex flex-col gap-5 max-w-[315px] md:max-w-none md:w-full" >
+        <div class="logo lg:flex lg:justify-center">
+          {% if main.logo %}
+            {{ main.logo | image_url: width: main.logo.width, height: main.logo.height | image_tag: loading: 'lazy' }}
+          {% else %}
+            {% render 'logo-bruta' %}
+        {% endif %}
+        </div>
+        <div>
+            <ul class="flex gap-3 items-center md:justify-center">
+              {% for social in section.blocks %}
+                {% case social.type %}
+                  {% when 'social' %}
+                    <li>
+                      <a target="_blank" href="{{ social.settings.social_url }}" title="Rede social">
+                        <img
+                          src="{{ social.settings.image_social |  image_url }}"
+                          alt="{{ social.settings.image_social.alt }}"
+                          width="{{ social.settings.image_social.width }}"
+                          height="{{ social.settings.image_social.height }}"
+                          loading="lazy"
+                        >
+                        </a>
+                    </li>
+                {% endcase %}
+              {% endfor %}
+            </ul>
+          </div>
+      </div>
+      <div class="atendimento md:border-b md:border-[#C6C6C6]">
+        <h3 data-toggle="1" class="toggle-btn font-black text-custom-black mb-6 text-sm text-start flex justify-between items-center md:mb-4">Institucional
+          <span class="hidden md:block">
+            {% render 'arrow-footer' %}
+          </span>  
+        </h3>
+        {% if main.navegue.links.size > 0 %}
+          <ul data-content="1" class="flex flex-col gap-2 md:hidden md:gap-0">
+            {% for link in main.navegue.links %}
+              <li class="text-[#474747] font-bold text-xs mb-4 text-start">
+                <a href="{{ link.url }}" title="{{ link.title }}">
+                  {{ link.title -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="conta md:border-b md:border-[#C6C6C6]">
+        <h3  data-toggle="2" class="toggle-btn font-black text-custom-black mb-6 text-sm text-start flex justify-between items-center md:mb-4">Central de ajuda
+          <span class="hidden md:block">
+            {% render 'arrow-footer' %}
+          </span>
+        </h3>
+        {% if main.conta.links.size > 0 %}
+          <ul data-content="2" class="flex flex-col gap-2 md:hidden md:gap-0">
+            {% for link in main.conta.links %}
+              <li class="text-[#474747] font-bold text-xs mb-4 text-start">
+                <a href="{{ link.url }}" title="{{ link.title }}">
+                  {{ link.title -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="ajuda">
+        <h3 class="text-base font-black text-custom-black mb-6 text-sm text-start md:text-center">Central de atendimento</h3>
+        <div class="flex flex-col gap-4 items-start md:items-center">
+          <div class="phone_atendimento flex flex-col content-start items-start md:items-center gap-2">
+            <p class="text-[#474747] font-bold text-xs">Atendimento ao Cliente</p>
+            <span class="text-custom-black text-sm font-black">
+                {{ main.ajuda }}
+            </span>
+          </div>
+          <div class="mensagem flex items-start flex-col gap-2 md:items-center">
+            <p class="text-[#474747] font-bold text-xs">Segunda à sexta das 8h às 17h</p>
+            <span class="text-custom-black text-sm font-black">
+                {{ main.mensagem }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="payments-security bg-[#F9F9F9] pb-4">
+    <div class="container">
+      <div class="flex justify-between items-start lg:flex-col lg:justify-center lg:gap-4 pt-8 border-t border-[#E5E2E0]">
+        <div class="payments">
+          <h3 class="text-custom-black font-black text-sm mb-2.5">Formas de pagamento</h3>
+          <ul class="flex gap-3 items-center lg:flex-wrap">
+            {% for payment in section.blocks %}
+              {% case payment.type %}
+                {% when 'payment' %}
+                  <li>
+                    <img
+                      src="{{ payment.settings.image_payment |  image_url }}"
+                      alt="{{ payment.settings.image_payment.alt }}"
+                      width="{{ payment.settings.image_payment.width }}"
+                      height="{{ payment.settings.image_payment.height }}"
+                      loading="lazy"
+                    >
+                  </li>
+              {% endcase %}
+            {% endfor %}
+          </ul>
+        </div>
+                    
+        <div class="security">
+          <h3 class="text-custom-black font-black text-sm mb-2.5">Segurança</h3>
+          <ul class="flex gap-3 items-center">
+            {% for security in section.blocks %}
+              {% case security.type %}
+                {% when 'security' %}
+                  <li>
+                    <div title="Selo segurança">
+                      <img
+                        src="{{ security.settings.url_security |  image_url }}"
+                        alt="{{ security.settings.url_security.alt }}"
+                        width="{{ security.settings.url_security.width }}"
+                        height="{{ security.settings.url_security.height }}"
+                        loading="lazy"
+                      >
+                      </div>
+                  </li>
+              {% endcase %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="resultate" class="bg-[#F9F9F9]">
+      <div class="store-info bg-[#F1F1F1] p-4">
+        <p class="text-center text-[10px] font-bold text-custom-black">Todas as marcas e suas imagens são de propriedade de seus respectivos donos. É vedada a reprodução, total ou parcial, de qualquer conteúdo sem expressa autorização.</p>
+      </div>
+      <div class="container py-2.5 flex items-center justify-between md:flex-col md:gap-2">
+        <p class="text-[10px] font-bold text-custom-black md:text-center">© Copyright 2025 - Todos os direitos reservados - www.brutaonline.com.br</p>
+          <div class="resultate flex items-center gap-1">
+            <p class="text-[10px] font-bold text-custom-black">Tecnologia:</p>
+            <a href="https://resultate.com.br" aria-label="Página Resultate" target="_blank">
+              {% render 'resultate' %}
+            </a>
+          </div>
+      </div>
+</div>
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo area"
+    },
+    {
+      "type": "richtext",
+      "id": "txt_1",
+      "label": "Texto Rua",
+      "default": "<p>Rua Juscelino Kubitschek, 75, Village da Luz<br/>Cachoeiro de Itapemirim - ES<br/>CEP 29309-405</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "txt_2",
+      "label": "Texto Horario funcionamento",
+      "default": "<p><strong>Confira nossos horários de funcionamento:<br/></strong>Segunda a Sexta das 08:00 as 18:00<br/>Sábado 08:00 as 12:00</p>"
+    },
+    {
+      "type": "header",
+      "content": "Menu Navegue"
+    },
+    {
+      "type": "link_list",
+      "id": "navegue",
+      "label": "Lista links Instiucional"
+    },
+    {
+      "type": "link_list",
+      "id": "conta",
+      "label": "Lista links Central de ajuda"
+    },
+    {
+      "type": "header",
+      "content": "Central de atendimento"
+    },
+    {
+      "type": "richtext",
+      "id": "email",
+      "label": "Email",
+      "default": "<p><a href='mailto:endora@gmail.com.br'target='_blank'>endora@gmail.com.br</a></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "ajuda",
+      "label": "Info Horario",
+      "default": "<p>De segunda a sexta, das 8hs as 18hs.<br/> Sábado das 8hs as 12hs.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "mensagem",
+      "label": "Mensagem",
+      "default": "<p><a href='#' target='_blank'>Nos envie um e-mail<strong>Entraremos em contato com você</strong></a></p>"
+    },
+  ],
+ "blocks": [
+    {
+      "type": "security",
+      "name": "security_images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "url_security",
+          "label": "Imagem do selo de segurança"
+        }
+      ]
+    },
+    {
+      "type": "payment",
+      "name": "payment_methods",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_payment",
+          "label": "Imagem forma de pagamento"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "social_images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_social",
+          "label": "Imagem rede social"
+        },
+        {
+          "type": "url",
+          "id": "social_url",
+          "label": "Url Rede Social"
+        },
+      ]
+    },
+  ]
+}
+{% endschema %}
