@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,23 +15,36 @@
         "custom_group_gVJfKE": {
           "type": "custom-group",
           "settings": {
-            "image_slide": "shopify://shop_images/Preenchimento_generativo_4_1.png",
-            "link_banner": "shopify://pages/contact",
-            "image_slide_mob": "shopify://shop_images/image_21_42d05bb0-2eb5-4443-be0d-c92e24ff9522.png",
-            "link_banner_mob": "shopify://pages/contact"
+            "image_slide": "shopify://shop_images/Site-no-ar-FG-Desktop.png",
+            "link_banner": "",
+            "image_slide_mob": "shopify://shop_images/Site-no-ar-FG-Mobile.png",
+            "link_banner_mob": ""
           }
         },
         "custom_group_39rEQt": {
           "type": "custom-group",
           "settings": {
-            "image_slide": "shopify://shop_images/Preenchimento_generativo_4_1.png",
-            "link_banner": "shopify://pages/contact",
-            "image_slide_mob": "shopify://shop_images/image_21_42d05bb0-2eb5-4443-be0d-c92e24ff9522.png",
-            "link_banner_mob": "shopify://pages/contact"
+            "image_slide": "shopify://shop_images/15-Off-Toda-Linha-Desktop.png",
+            "link_banner": "shopify://collections/15-off-exclusivo",
+            "image_slide_mob": "shopify://shop_images/15-Off-Toda-Linha-Mobile.png",
+            "link_banner_mob": "shopify://collections/15-off-exclusivo"
+          }
+        },
+        "custom_group_xcMLii": {
+          "type": "custom-group",
+          "settings": {
+            "image_slide": "shopify://shop_images/FG-Puxadores-acima-300-Desktop.png",
+            "link_banner": "shopify://collections/puxadores",
+            "image_slide_mob": "shopify://shop_images/FG-Puxadores-acima-300-Mobile.png",
+            "link_banner_mob": "shopify://collections/puxadores"
           }
         }
       },
-      "block_order": ["custom_group_gVJfKE", "custom_group_39rEQt"],
+      "block_order": [
+        "custom_group_gVJfKE",
+        "custom_group_39rEQt",
+        "custom_group_xcMLii"
+      ],
       "settings": {}
     },
     "deals-home": {
@@ -81,86 +103,76 @@
     "categories-navigation": {
       "type": "categories-navigation",
       "blocks": {
-        "custom_group_QPXcQb": {
+        "custom_group_4PemL3": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/chapas-e-paineis",
+            "image_infocard": "shopify://shop_images/Chapas-e-Paineis-200x175_3e14bc67-31ac-49a1-9577-8bb18a8b2dac.png"
           }
         },
-        "custom_group_94ktfR": {
+        "custom_group_37RCLT": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/fechaduras",
+            "image_infocard": "shopify://shop_images/Fechaduras-200x175_59dd9d35-3096-4ac1-97bd-00e061773365.png"
           }
         },
-        "custom_group_gG4GFQ": {
+        "custom_group_khjQwx": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/ferragens",
+            "image_infocard": "shopify://shop_images/Ferragens-200x175_f7ef43d9-4991-4c8b-9176-5bfd66ae69dc.png"
           }
         },
-        "custom_group_KFV3VC": {
+        "custom_group_9CaCq3": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/pisos-e-revestimentos",
+            "image_infocard": "shopify://shop_images/Pisos-e-Revestimentos-200x175_cf0c0815-4fcd-413d-967b-8efc80cb9a89.png"
           }
         },
-        "custom_group_hXthMp": {
+        "custom_group_VixBEb": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/puxadores",
+            "image_infocard": "shopify://shop_images/Puxadores-200x175_de1e5e0b-c5bd-435c-8b0b-2233c18b6e9e.png"
           }
         },
-        "custom_group_6Qgdj7": {
+        "custom_group_jNfWYd": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/casa-e-utilidades",
+            "image_infocard": "shopify://shop_images/Casa-e-Utilidades-200x175_b685ddb5-3381-4e75-9b7b-6a91e0f22eb0.png"
           }
         },
-        "custom_group_QfqMp9": {
+        "custom_group_BKKdWM": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/quimicos",
+            "image_infocard": "shopify://shop_images/Quimicos-200x175_fd02dada-d515-4690-b08f-9ca29c9e7cda.png"
           }
         },
-        "custom_group_zLaXQK": {
+        "custom_group_WN3GzQ": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
-            "image_infocard": "shopify://shop_images/banner_oferta_1.png"
+            "link_infocard": "shopify://collections/maquinas-e-ferramentas",
+            "image_infocard": "shopify://shop_images/Maquinas-e-Ferramentas-200x175_f6b6ce41-f340-4420-8d24-44d7f7deb540.png"
           }
         }
       },
       "block_order": [
-        "custom_group_QPXcQb",
-        "custom_group_94ktfR",
-        "custom_group_gG4GFQ",
-        "custom_group_KFV3VC",
-        "custom_group_hXthMp",
-        "custom_group_6Qgdj7",
-        "custom_group_QfqMp9",
-        "custom_group_zLaXQK"
+        "custom_group_4PemL3",
+        "custom_group_37RCLT",
+        "custom_group_khjQwx",
+        "custom_group_9CaCq3",
+        "custom_group_VixBEb",
+        "custom_group_jNfWYd",
+        "custom_group_BKKdWM",
+        "custom_group_WN3GzQ"
       ],
-      "settings": { "title_categ": "Navegue por categorias" }
-    },
-    "collection-list": {
-      "type": "collection-list",
-      "blocks": {
-        "collection_xFKXhf": {
-          "type": "collection",
-          "name": "Col",
-          "settings": { "collection": "bruta" }
-        }
-      },
-      "block_order": ["collection_xFKXhf"],
-      "settings": { "title": "<h2>Mais Vendidos</h2>" }
+      "settings": {
+        "title_categ": "Navegue por categorias"
+      }
     },
     "brand-navigation": {
       "type": "brand-navigation",
@@ -168,49 +180,49 @@
         "custom_group_QRzY9b": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/bosch",
             "image_infocard": "shopify://shop_images/image_3_b51f3dda-f3eb-46de-badc-deece7ff6107.png"
           }
         },
         "custom_group_J9jkXJ": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/dewalt",
             "image_infocard": "shopify://shop_images/image_4.png"
           }
         },
         "custom_group_JF9fL4": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/tarkett",
             "image_infocard": "shopify://shop_images/image_5.png"
           }
         },
         "custom_group_HhEUtd": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/durafloor",
             "image_infocard": "shopify://shop_images/image_6.png"
           }
         },
         "custom_group_HzgwBb": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/eucafloor",
             "image_infocard": "shopify://shop_images/image_7.png"
           }
         },
         "custom_group_Egwnzk": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/obispa",
             "image_infocard": "shopify://shop_images/3a267c8c4ed28b6942d5a9b24fe12e3a335d1a0f.png"
           }
         },
         "custom_group_3eqigH": {
           "type": "custom-group",
           "settings": {
-            "link_infocard": "shopify://pages/contact",
+            "link_infocard": "shopify://collections/maksiwa",
             "image_infocard": "shopify://shop_images/5ae4588ab13d72f4cd4fa20341f6643245536fe2.png"
           }
         }
@@ -224,7 +236,9 @@
         "custom_group_Egwnzk",
         "custom_group_3eqigH"
       ],
-      "settings": { "title_categ": "Navegue por marca" }
+      "settings": {
+        "title_categ": "Navegue por marca"
+      }
     },
     "main-banners": {
       "type": "main-banners",
@@ -233,22 +247,25 @@
           "type": "custom-group",
           "settings": {
             "image_slide": "shopify://shop_images/Frame_2608712.png",
-            "link_banner": "shopify://pages/contact",
+            "link_banner": "shopify://collections/puxadores-aut",
             "image_slide_mob": "shopify://shop_images/Frame_2608712.png",
-            "link_banner_mob": "shopify://pages/contact"
+            "link_banner_mob": "shopify://collections/puxadores-aut"
           }
         },
         "custom_group_GnNfDd": {
           "type": "custom-group",
           "settings": {
             "image_slide": "shopify://shop_images/Frame_2608713.png",
-            "link_banner": "shopify://pages/contact",
+            "link_banner": "shopify://collections/maquinas-e-ferramentas",
             "image_slide_mob": "shopify://shop_images/Frame_2608713.png",
-            "link_banner_mob": "shopify://pages/contact"
+            "link_banner_mob": "shopify://collections/maquinas-e-ferramentas"
           }
         }
       },
-      "block_order": ["custom_group_KVK7Pq", "custom_group_GnNfDd"],
+      "block_order": [
+        "custom_group_KVK7Pq",
+        "custom_group_GnNfDd"
+      ],
       "settings": {}
     },
     "collection-list-bestoffer": {
@@ -256,11 +273,17 @@
       "blocks": {
         "collection_DzzEGW": {
           "type": "collection",
-          "settings": { "collection": "bruta" }
+          "settings": {
+            "collection": "bruta"
+          }
         }
       },
-      "block_order": ["collection_DzzEGW"],
-      "settings": { "title": "<p>PRINCIPAIS OFERTAS</p>" }
+      "block_order": [
+        "collection_DzzEGW"
+      ],
+      "settings": {
+        "title": "<p>PRINCIPAIS OFERTAS</p>"
+      }
     },
     "main-banners-solo": {
       "type": "main-banners",
@@ -268,14 +291,16 @@
         "custom_group_ViDANY": {
           "type": "custom-group",
           "settings": {
-            "image_slide": "shopify://shop_images/Frame_2608715.png",
-            "link_banner": "shopify://pages/contact",
-            "image_slide_mob": "shopify://shop_images/Frame_2608715_1.png",
-            "link_banner_mob": "shopify://pages/contact"
+            "image_slide": "shopify://shop_images/Banner_Shopfy_pc_1360x250px.png",
+            "link_banner": "shopify://collections/bruta",
+            "image_slide_mob": "shopify://shop_images/Banner_Shopfy_mobile_382x142px.png",
+            "link_banner_mob": "shopify://collections/bruta"
           }
         }
       },
-      "block_order": ["custom_group_ViDANY"],
+      "block_order": [
+        "custom_group_ViDANY"
+      ],
       "settings": {}
     },
     "collection-list-bestsellers": {
@@ -283,18 +308,23 @@
       "blocks": {
         "collection_rcGCVQ": {
           "type": "collection",
-          "settings": { "collection": "bruta" }
+          "settings": {
+            "collection": "bruta"
+          }
         }
       },
-      "block_order": ["collection_rcGCVQ"],
-      "settings": { "title": "<p>FERRAMENTAS ELÉTRICAS</p>" }
+      "block_order": [
+        "collection_rcGCVQ"
+      ],
+      "settings": {
+        "title": "<p>FERRAMENTAS ELÉTRICAS</p>"
+      }
     }
   },
   "order": [
     "main",
     "deals-home",
     "categories-navigation",
-    "collection-list",
     "brand-navigation",
     "main-banners",
     "collection-list-bestoffer",
