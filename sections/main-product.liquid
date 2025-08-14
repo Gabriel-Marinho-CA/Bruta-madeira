@@ -120,11 +120,14 @@
                     <p class="text-custom-black line-through text-sm font-black">DE: {{ listPriceMoney }}</p>
                   {% endif %}
                   {% if discountPriceValue %}
-                    <p class="text-custom-black line-through text-sm font-black">DE: <span class="list-price-discount-auto">
-                      {{ product.selected_or_first_available_variant.price | money}}
-                  
-                    </span> 
-                    </p>
+                    <div class="flex items-center gap-4">
+                      <p class="text-custom-black line-through text-sm font-black">DE: <span class="list-price-discount-auto">
+                        {{ product.selected_or_first_available_variant.price | money}}
+                    
+                      </span> 
+                      </p>
+                      <span class="bg-primary text-white text-xs px-2 py-1 ">{{discountPriceValue | round }}% OFF</span>
+                    </div>
                 {% endif %}
                   {% if discountTag %}
                     <p
@@ -136,17 +139,19 @@
               </div>
           </div>
           <div>
-            <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-start gap-1">
-                <span class="text-sm mt-1.5">R$</span>
-                    <span class="best-price-text">
-                    {% if discountPriceValue %}
-                  {{discountPriceFormatted}}
-                {% else %}
-                {{ bestPriceMoney }}
-                  
-                    {% endif %}
-                  </span>
-            </p>
+            <div class="flex items-center gap-4">
+              <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-start gap-1">
+                  <span class="text-sm mt-1.5">R$</span>
+                      <span class="best-price-text">
+                      {% if discountPriceValue %}
+                    {{discountPriceFormatted}}
+                  {% else %}
+                  {{ bestPriceMoney }}
+                    
+                      {% endif %}
+                    </span>
+              </p>
+            </div>
             <p class="text-custom-black text-start text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black installment-variant-value">
                            {% assign installMentVariantWithDiscount = product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | divided_by: 12 | round: 2 | money%}
 
