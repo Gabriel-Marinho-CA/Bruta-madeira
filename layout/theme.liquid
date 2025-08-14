@@ -40,79 +40,16 @@
         {%- endunless -%}
       {%- endcapture -%}
       <title>{{ seo_title | strip }}</title>
-      <style>
-        .progress-bar-container {
-  width: 80%; /* Largura total da barra */
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden; /* Garante que a barra interna não transborde */
-  margin: 20px auto; /* Centraliza a barra */
-}
-
-.progress-bar {
-  height: 100%;
-  width: 0; /* Começa com 0% */
-  background-color: #4caf50; /* Cor de preenchimento */
-  border-radius: 10px;
-  transition: width 1s linear; /* Adiciona uma animação suave */
-}
-      </style>
   </head>
 
   <body id="{{ page_title | handle }}" class="bg-[#F9F9F9] template-{{ template.name | handle }}">
-      {% comment %} {% section 'main-header' %}
-    <script src="{{ 'Utils.js' | asset_url }}" defer></script> {% endcomment %}
+      {% section 'main-header' %}
+    <script src="{{ 'Utils.js' | asset_url }}" defer></script>
 
-    <main role="main" id="MainContent" style="display: none;">
+    <main role="main" id="MainContent">
       {{ content_for_layout }}
     </main>
 
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-      <div class="img flex items-center justify-center pb-5">
-        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 564.62799 127.49867" height="60" width="178" xml:space="preserve" id="svg2" version="1.1"><metadata id="metadata8"><rdf:rdf><cc:work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type></cc:work></rdf:rdf></metadata><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,95.624 H 423.471 V 0 H 0 Z"></path></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,127.49867)" id="g10"><g id="g12"><g clip-path="url(#clipPath18)" id="g14"><g transform="translate(167.1813,95.622)" id="g20"><path id="path22" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" d="m 0,0 v -51.751 c 0,-6.473 0.946,-15.186 2.82,-20.171 1.92,-5.092 4.686,-9.476 8.219,-13.026 3.559,-3.554 7.801,-6.253 12.612,-8.036 4.715,-1.751 9.932,-2.638 15.505,-2.638 5.686,0 10.957,0.912 15.668,2.712 4.81,1.833 9.036,4.587 12.557,8.191 3.492,3.583 6.229,8.045 8.132,13.253 1.862,5.105 2.808,13.918 2.808,20.441 V 0 Z M 105.444,-8.845 V -93.502 H 146.73 V -8.845 H 163.2 V 0.002 H 88.974 V -8.845 Z M -5.13,-90.419 -29.486,-58.903 c -1.148,1.486 -0.572,3.657 1.163,4.378 2.409,0.993 4.628,2.224 6.633,3.682 0.886,0.63 1.731,1.315 2.528,2.04 2.67,2.433 4.782,5.354 6.269,8.679 1.511,3.331 2.273,7.144 2.273,11.338 v 0.232 c 0,4.23 -0.887,8.174 -2.635,11.731 -1.72,3.486 -4.176,6.549 -7.299,9.107 -3.052,2.487 -6.746,4.42 -10.975,5.764 C -35.652,-0.655 -40.292,0 -45.312,0 h -40.011 v -50.843 -42.658 h 15.395 47.684 17.114 2.38 z M 213.082,-0.07 213.049,0 h -12.424 l -43.241,-93.499 h 44.091 l 9.015,19.86 c 1.041,2.29 3.322,3.762 5.835,3.762 h 8.157 c 2.513,0 4.794,-1.468 5.835,-3.757 l 9.024,-19.865 H 256.29 Z M -91.272,-65.72 v -0.243 c 0,-4.23 -0.894,-8.144 -2.661,-11.627 -1.758,-3.47 -4.277,-6.438 -7.497,-8.82 -3.042,-2.272 -6.719,-4.05 -10.931,-5.283 -4.099,-1.2 -8.701,-1.809 -13.674,-1.809 h -41.146 V 0.002 h 39.33 c 4.498,0 8.684,-0.55 12.44,-1.631 3.914,-1.122 7.323,-2.779 10.127,-4.925 2.893,-2.221 5.188,-4.95 6.821,-8.117 1.651,-3.221 2.487,-6.806 2.487,-10.661 v -0.246 c 0,-3.464 -0.527,-6.578 -1.569,-9.256 -1.031,-2.648 -2.404,-4.996 -4.077,-6.978 -0.009,-0.01 -0.018,-0.021 -0.027,-0.031 -1.291,-1.51 -1.043,-3.772 0.567,-4.936 0.951,-0.688 1.841,-1.427 2.672,-2.22 2.119,-2.005 3.844,-4.402 5.133,-7.123 1.33,-2.809 2.005,-6.038 2.005,-9.598"></path></g></g></g></g></svg>
-      </div>
-      <h1 class="text-4xl pb-4 text-center">Site em manutenção</h1>
-      <a class="text-red-300 underline block text-center font-bold" href="https://api.whatsapp.com/send?l=pt&phone=5528999190573">+55 28 99919-0573</a>
-
-      <div class="progress-bar-container">
-  <div class="progress-bar"></div>
-</div>
-    </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded",function() {
-        document.querySelector("#MainContent").remove();
-const progressBar = document.querySelector(".progress-bar");
-let progress = 0;
-const increment = 10;       // 10% por segundo
-const intervalTime = 1000;  // 1000ms = 1 segundo
-
-function animateProgress() {
-  progress += increment;
-
-  if (progress <= 90) {
-    progressBar.style.width = progress + "%";
-  } else {
-    // Remove a transição temporariamente para resetar imediatamente para 0%
-    progressBar.style.transition = "none";
-    progress = 0;
-    progressBar.style.width = "0%";
-
-    // Força o reflow para aplicar o "reset" antes de voltar a animar
-    void progressBar.offsetWidth;
-
-    // Reativa a transição suavemente
-    progressBar.style.transition = "width 1s linear";
-  }
-
-  setTimeout(animateProgress, intervalTime);
-}
-
-animateProgress();
-      })
-    </script>
-{% comment %} 
     {% section 'main-newsletter' %}
     {% section 'main-footer' %}
     {% section 'main-minicart' %}
@@ -127,6 +64,6 @@ animateProgress();
     ></div>
     <script src="{{ 'MinicartApi.js' | asset_url }}" defer></script>
     <script src="{{ 'Minicart.js' | asset_url }}" defer></script>
-    <script src="{{ 'Wishlist_localstorage.js' | asset_url }}" defer></script> {% endcomment %}
+    <script src="{{ 'Wishlist_localstorage.js' | asset_url }}" defer></script>
   </body>
 </html>
