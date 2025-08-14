@@ -23,20 +23,24 @@ const addToCart = async (button) => {
     }
   };
   
-  function changeShelfQty(button, action) {
-    const wrapper = button.closest(".buy-btn");
-    const input = wrapper.querySelector(".quantity_shelf");
-    const max = parseInt(input.dataset.max) || 999;
-    let value = parseInt(input.value) || 1;
-  
-    if (action === "plus" && value < max) {
-      input.value = value + 1;
-    }
-  
-    if (action === "minus" && value > 1) {
-      input.value = value - 1;
-    }
+function changeShelfQty(button, action) {
+  const wrapper = button.closest(".buy-btn");
+  const input = wrapper.querySelector(".quantity_shelf");
+  const plusBtn = wrapper.querySelector("button.plus");
+  const max = parseInt(input.dataset.max) || 999;
+  let value = parseInt(input.value) || 1;
+
+  if (action === "plus" && value < max) {
+    input.value = ++value;
   }
+
+  if (action === "minus" && value > 1) {
+    input.value = --value;
+  }
+
+  plusBtn.classList.toggle("border-[#808080]", value >= max);
+  plusBtn.classList.toggle("[&>svg]:fill-[#808080]", value >= max);
+}
   
   const removeItemFromCart = async (id) => {
     try {
@@ -88,6 +92,9 @@ const addToCart = async (button) => {
   
           const box_items = divHtml.querySelector("#main-minicart").innerHTML;
           document.querySelector("#main-minicart").innerHTML = box_items;
+          document.querySelectorAll("#main-minicart input[name='quantity']").forEach((input) => {
+            togglePlusButtonState(input);
+          });
             
           const items_count = divHtml.querySelector(
             ".minicart-items-count"
@@ -133,25 +140,26 @@ const addToCart = async (button) => {
     document.querySelector("#main-minicart").classList.remove("active");
   }
   
-  const stepUpInput = (element, id) => {
-  const input = element.previousElementSibling;
+
+const stepUpInput = (button, id) => {
+  const input = button.previousElementSibling;
   const max = parseInt(input.getAttribute("max"));
   let quantity = parseInt(input.value);
 
   if (quantity < max) {
-    input.stepUp();
     quantity++;
-    updateMinicartItems(id, quantity); 
+    input.value = quantity;
+    updateMinicartItems(id, quantity);
   }
 };
 
-const stepDownInput = (element, id) => {
-  const input = element.nextElementSibling;
+const stepDownInput = (button, id) => {
+  const input = button.nextElementSibling;
   let quantity = parseInt(input.value);
 
   if (quantity > 1) {
-    input.stepDown();
     quantity--;
+    input.value = quantity;
     updateMinicartItems(id, quantity);
   }
 };
@@ -168,5 +176,17 @@ function updateMinicartInput(input, variantId) {
   }
 
   input.value = value;
-  updateMinicartItems(variantId, value); 
+  updateMinicartItems(variantId, value);
+  togglePlusButtonState(input);
+}
+
+function togglePlusButtonState(input) {  
+ const quantity = +input.value;
+  const max = +input.max;
+  const plusButton = input.nextElementSibling;
+  const isDisabled = quantity >= max;
+
+  plusButton.disabled = isDisabled;
+  plusButton.classList.toggle("border-[#808080]", isDisabled);
+  plusButton.classList.toggle("[&>svg]:fill-[#808080]", isDisabled);
 }

@@ -3,6 +3,14 @@
 {% assign bestPrice = product.price | times: 1.0 | divided_by: 100 %}
 {% assign bestPriceMoney = product.price | money | replace: 'R$', ' ' %}
 {% assign seals = product.metafields.custom.tags_prateleira.value %}
+{% assign discountPriceValue =  product.metafields.custom.porcentagem_desconto %}
+{% assign discountCalc =  discountPriceValue |  divided_by: 100 %}
+
+{% if discountPriceValue %}                                
+  {% capture discountPriceFormatted %}
+    {{ product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | money_without_currency }}
+  {% endcapture %}
+{% endif %}
 
 {% if product.compare_at_price %}
   {% assign listPrice = product.compare_at_price_min | times: 1.0 | divided_by: 100 %}
@@ -97,10 +105,10 @@
   <h3 class="title-product text-sm text-custom-black font-black mb-4 h-10 line-clamp-2 text-center">
     {{ productTitle }}
   </h3>
-  {% comment %} <div class="shelf-price flex items-center gap-2 flex-wrap min-h-[28px] sm:min-h-fit justify-center">
-    {% if listPriceMoney %}
-      <p class="list-price text-[#92908F] line-through text-xs font-black">DE: {{ listPriceMoney }}</p>
-    {% endif %}
+  {% if discountPriceValue %}
+  <div class="shelf-price flex items-end gap-2 flex-wrap min-h-[28px] sm:min-h-fit justify-center">
+      <p class="list-price text-[#92908F] line-through text-xs font-black">DE: {{ product.selected_or_first_available_variant.price | money }}</p>
+      <p> <span class="discount-tag rounded-sm text-[10px] text-center p-1 bg-[#BA1A1A] text-white font-black">{{discountPriceValue | round }}% OFF</span></p>
     {% if discountTag %}
       <p
         class="discount-tag rounded-sm text-[10px] text-center p-1 bg-[#BA1A1A] text-white font-black"
@@ -108,10 +116,31 @@
         {{ discountTag }}OFF
       </p>
     {% endif %}
-  </div> {% endcomment %}
-  <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-center gap-1"><span class="text-sm mt-1.5">R$</span>{{ bestPriceMoney }}</p>
+  </div>
+{% else %}
+  <div class="h-7"></div>
+    {% endif %}
+
+  <p class="best-price text-[#BA1A1A] font-black text-[28px] flex items-center justify-center gap-1"><span class="text-sm mt-1.5">R$</span>
+    <span class="best-price-text">
+      {% if discountPriceValue %}
+        {{discountPriceFormatted}}
+      {% else %}
+        {{ bestPriceMoney}}              
+      {% endif %}
+    </span>
+  </p>
+
   <div class="installments">
-    <p class="text-[#777777] text-center text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black">{{ product.price | divided_by: 6 | money }}</span> em até <span class="font-black">12x</span></p>
+    <p class="text-[#777777] text-center text-xs">à vista no <span class="font-black">Pix</span> ou <span class="font-black">
+      {% assign installMentVariantWithDiscount = product.selected_or_first_available_variant.price | times: discountCalc | minus: product.selected_or_first_available_variant.price | abs | divided_by: 12 | round: 2 | money%}
+      {% assign installmentVariant = product.selected_or_first_available_variant.price |  divided_by: 12 |  money  %}         
+      {% if discountPriceValue %}
+       {{installMentVariantWithDiscount}}
+      {% else %}
+       {{ installmentVariant }}
+      {% endif %}
+      </span> em até <span class="font-black">12x</span></p>
   </div>
 </a>
 

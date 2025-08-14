@@ -49,6 +49,11 @@
             <h3 class="text-base text-custom-black font-black ">
               <a href="{{ item.url }}" title="{{ item.product.title }}">
                 {{- item.product.title }}
+
+                {% if item.variant.title != "Default Title" %}
+                  <span class="hidden md:inline-block"> - {{ item.variant.title }}</span>
+                {% endif %}
+
               </a>
             </h3>
 
@@ -78,23 +83,44 @@
             </div>
             <div class="flex items-center gap-12 md:gap-5">
               {% if item.variant.title != "Default Title" %}
-               <p class="border border-[#EBEBEB] rounded py-[5px] px-3.5 h-10 w-full max-w-max flex items-center">
+               <p class="md:hidden border border-[#EBEBEB] rounded py-[5px] px-3.5 h-10 w-full max-w-max flex items-center text-xs font-black text-custom-black">
                 {{ item.variant.title }}
               </p>
             {% endif %}
               <div class="flex justify-between items-start w-full">
                 {% if item.properties == empty %}
-                  <div class="border border-[#EBEBEB] h-10 flex items-center max-w-20 rounded py-[5px] px-3.5">
-                    <button onclick="stepDownInput(this, '{{ item.key }}', '{{ item.quantity }}')">-</button>
+                  <div class="flex items-center bg-[#35735A] max-w-[86px] rounded px-1.5 py-2.5">
+                    <button
+                      class="flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black gap-[5px]"
+                      data-action="minus"
+                      aria-label="Diminuir quantidade"
+                      type="button"
+                      onclick="stepDownInput(this, '{{ item.key }}', '{{ item.quantity }}')"
+                    >
+                      {% render 'minus-ico' %}
+                    </button>
+
                     <input
                       onchange="updateMinicartInput(this, '{{ item.variant_id }}')"
                       min="1"
                       type="number"
                       value="{% if item.quantity %}{{ item.quantity }}{% else %}1{% endif %}"
                       max="{{ item.variant.inventory_quantity  }}"
-                      class="text-center w-full outline-none [appearance:textfield]"
+                      name="quantity"
+                      aria-label="quantidade"
+                      class="mx-[3px] w-6 text-center bg-transparent text-white font-black text-sm [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none "
                     >
-                    <button onclick="stepUpInput(this, '{{ item.key }}', '{{ item.quantity }}' )">+</button>
+
+                    <button
+                      class="flex items-center justify-center border border-white text-white rounded-full w-5 h-5 text-base font-black"
+                      data-action="plus"
+                      aria-label="Aumentar quantidade"
+                      type="button"
+                      onclick="stepUpInput(this, '{{ item.key }}', '{{ item.quantity }}' )"
+                    >
+                      {% render 'plus-ico' %}
+                    </button>
+
                   </div>
                   <button
                     aria-label="remover item"
